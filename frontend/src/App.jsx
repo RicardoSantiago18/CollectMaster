@@ -4,7 +4,9 @@ import { CssBaseline } from '@mui/material'
 import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home/Home'
 import Register from './pages/Auth/Register'
-import Login from './pages/Auth/Login'; 
+import Login from './pages/Auth/Login';
+import ForgotPassword from './pages/Auth/ForgotPassword';
+import ResetPassword from './pages/Auth/ResetPassword';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Social from './pages/Social/Social';
 import ProfilePage from './pages/Profile/ProfilePage';
@@ -69,6 +71,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/social" element={<Social />} />
         <Route path="/social/user/:id" element={<SocialUserCollectionsPage />} />

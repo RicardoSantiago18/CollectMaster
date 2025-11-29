@@ -93,3 +93,66 @@ export const loginUser = async (email, senha) => {
     return { success: false, error: 'Erro de conexão. Tente novamente.' };
   }
 };
+
+/**
+ * Solicita recuperação de senha.
+ * Envia o email do usuário para o backend que gera um token de reset.
+ * 
+ * @param {string} email - Email do usuário
+ * @returns {Promise<{success: boolean, data?: object, error?: string}>}
+ */
+export const forgotPassword = async (email) => {
+  try {
+    const response = await fetch('http://localhost:8000/api/auth/forgot-password', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+      }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return { success: true, data: data };
+    } else {
+      const errorData = await response.json();
+      return { success: false, error: errorData.detail || 'Erro ao solicitar recuperação de senha' };
+    }
+  } catch (error) {
+    return { success: false, error: 'Erro de conexão. Tente novamente.' };
+  }
+};
+
+/**
+ * Confirma a recuperação de senha usando o token.
+ * 
+ * @param {string} token - Token de recuperação de senha
+ * @param {string} password - Nova senha
+ * @returns {Promise<{success: boolean, data?: object, error?: string}>}
+ */
+export const resetPassword = async (token, password) => {
+  try {
+    const response = await fetch('http://localhost:8000/api/auth/reset-password', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        token: token,
+        new_password: password,
+      }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return { success: true, data: data };
+    } else {
+      const errorData = await response.json();
+      return { success: false, error: errorData.detail || 'Erro ao redefinir senha' };
+    }
+  } catch (error) {
+    return { success: false, error: 'Erro de conexão. Tente novamente.' };
+  }
+};

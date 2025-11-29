@@ -4,55 +4,71 @@
     "name": "Gabriel Ribeiro",
     "email": "gabriel@collectmaster.com",
     "hashed_password": "$2b$12$LoyVC0DjbMksYYRe3OU7dusumxpPegM/vjyN9pboH2GQ/bx3juyD.",
-    "bio": null
+    "bio": null,
+    "reset_token": null
   },
   {
     "id": 2,
     "name": "Ana Clara",
     "email": "ana@collectmaster.com",
     "hashed_password": "$2b$12$LoyVC0DjbMksYYRe3OU7dusumxpPegM/vjyN9pboH2GQ/bx3juyD.",
-    "bio": null
+    "bio": null,
+    "reset_token": null
   },
   {
     "id": 3,
     "name": "Roberto Carlos",
     "email": "roberto@collectmaster.com",
     "hashed_password": "$2b$12$LoyVC0DjbMksYYRe3OU7dusumxpPegM/vjyN9pboH2GQ/bx3juyD.",
-    "bio": null
+    "bio": null,
+    "reset_token": null
   },
   {
     "id": 4,
     "name": "Julia Games",
     "email": "julia@collectmaster.com",
     "hashed_password": "$2b$12$LoyVC0DjbMksYYRe3OU7dusumxpPegM/vjyN9pboH2GQ/bx3juyD.",
-    "bio": null
+    "bio": null,
+    "reset_token": null
   },
   {
     "id": 5,
     "name": "Paulo Action",
     "email": "paulo@collectmaster.com",
     "hashed_password": "$2b$12$LoyVC0DjbMksYYRe3OU7dusumxpPegM/vjyN9pboH2GQ/bx3juyD.",
-    "bio": null
+    "bio": null,
+    "reset_token": null
   },
   {
     "id": 6,
     "name": "CollectMaste",
     "email": "collectmaster@collectmaster.com",
     "hashed_password": "$2b$12$PPjottNVocZHVNGZjxiujOQH52iAMI6h1dxhJXznq3yFyvLWm7B8G",
-    "bio": "ContaTeste"
+    "bio": "ContaTeste",
+    "reset_token": null
   },
   {
     "id": 7,
     "name": "Conta Teste",
     "email": "contateste@teste.com",
     "hashed_password": "$2b$12$vEDI/qxwh73IhT./XvRy8.UIl.VbsnjJzJY.cn9G5dSOfrdG3AHWa",
-    "bio": "Ol\u00e1, sou apenas uma conta de testes"
+    "bio": "Ol\u00e1, sou apenas uma conta de testes",
+    "reset_token": null
   },
   {
     "id": 8,
     "name": "Usuario Novo",
     "email": "usuario@gmail.com",
     "hashed_password": "$2b$12$FL6rw.8xWwAFoqTiILzfEum7tirO8GKVkNid.wsPSmI3tf.AZ.vB.",
-    "bio": "Usuario passou aqui"
+    "bio": "Usuario passou aqui",
+    "reset_token": null
+  },
+  {
+    "id": 9,
+    "name": "teste",
+    "email": "teste@teste.com",
+    "hashed_password": "$2b$12$buRKzs0WEHj7./oBaRh0le6QwKyhJKMy9lazHXkGwKOVs7QPRuxyq",
+    "bio": null,
+    "reset_token": "8fa6a4ed-9827-497a-a832-fe1ebeba6341"
   }
 ]
