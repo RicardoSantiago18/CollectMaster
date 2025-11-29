@@ -26,10 +26,17 @@ import {
 } from '@mui/icons-material';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
-// Importa o hook que gerencia a lógica do formulário de registro
+/**
+ * FRM-CADASTRO - Formulário/Tela de Cadastro
+ * Conforme diagrama SD01 - REALIZAR CADASTRO
+ * 
+ * Este componente representa a interface de cadastro (FRM-CADASTRO).
+ * Recebe dados do colecionador através do método infoCadastro() e
+ * exibe confirmação de cadastro realizado com sucesso.
+ */
 import { useRegisterForm } from '../../hooks/useRegisterForm.js';
 
-// Componente visual do formulário de registro
+// Componente visual do formulário de registro (FRM-CADASTRO)
 // Recebe todas as props do hook useRegisterForm
 const RegisterView = ({
   formData,
@@ -355,7 +362,18 @@ const RegisterView = ({
 };
 
 
-// Componente principal de Registro que conecta a lógica com a visualização
+/**
+ * Componente principal de Registro (FRM-CADASTRO)
+ * Conecta a lógica do hook useRegisterForm com a visualização RegisterView.
+ * 
+ * Fluxo conforme diagrama SD01:
+ * 1. Colecionador → FRM-CADASTRO: infoCadastro()
+ * 2. FRM-CADASTRO → C-CADASTRO: criarUsuario(nome, email, senha)
+ * 3. C-CADASTRO → E-COLECIONADOR: criarUsuario()
+ * 4. E-COLECIONADOR → C-CADASTRO: retorna cadastro
+ * 5. C-CADASTRO → FRM-CADASTRO: retorna cadastro
+ * 6. FRM-CADASTRO → Colecionador: confirmaçãoCadastro
+ */
 const Register = () => {
   const logic = useRegisterForm();
   
