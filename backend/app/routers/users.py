@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from typing import List, Optional
 from .. import schemas, db_json
+from ..controllers.editarperfil import CEditarPerfil
 
 router = APIRouter()
 
@@ -30,7 +31,13 @@ async def read_user(user_id: int):
 
 @router.put("/{user_id}", response_model=schemas.UserPublic)
 async def update_user(user_id: int, user_data: schemas.UserUpdate):
-    updated_user = db_json.update_user_in_db(user_id, user_data)
-    if not updated_user:
-        raise HTTPException(status_code=404, detail="Usuário não encontrado")
-    return updated_user
+    """
+    Endpoint HTTP para atualização de usuário.
+    Recebe requisição HTTP PUT e chama o controller C-EDITARPERFIL.
+    Conforme diagrama SD03.
+    """
+    # Chama o controller C-EDITARPERFIL conforme diagrama SD03
+    # Passo 2.1: updateUser(id, dados)
+    user_public = CEditarPerfil.updateUser(user_id=user_id, dados=user_data)
+    
+    return user_public

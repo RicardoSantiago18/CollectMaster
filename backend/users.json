@@ -50,9 +50,9 @@
   },
   {
     "id": 8,
-    "name": "Usuario",
+    "name": "Usuario Novo",
     "email": "usuario@gmail.com",
     "hashed_password": "$2b$12$FL6rw.8xWwAFoqTiILzfEum7tirO8GKVkNid.wsPSmI3tf.AZ.vB.",
-    "bio": null
+    "bio": "Usuario passou aqui"
   }
 ]

@@ -1,9 +1,9 @@
 """
 Entidade E-COLECIONADOR
 Responsável por representar e gerenciar a lógica de domínio do colecionador.
-Implementa métodos conforme diagramas SD01 e SD02.
+Implementa métodos conforme diagramas SD01, SD02 e SD03.
 """
-from typing import Optional
+from typing import Optional, List
 from .. import schemas, db_json, security
 
 
@@ -73,4 +73,57 @@ class EColecionador:
             UserInDB: Objeto do usuário encontrado, ou None se não existir
         """
         return db_json.get_user_by_email(email=email)
+    
+    @staticmethod
+    def load_users() -> List[schemas.UserInDB]:
+        """
+        Carrega todos os usuários do banco de dados.
+        
+        Conforme diagrama SD03, este método é responsável por:
+        - Carregar a lista de usuários para validações
+        
+        Returns:
+            List[UserInDB]: Lista de todos os usuários
+        """
+        return db_json.load_users()
+    
+    @staticmethod
+    def verificaEmailEmUso(email: str, user_id_excluir: int) -> bool:
+        """
+        Verifica se um email já está em uso por outro usuário.
+        
+        Conforme diagrama SD03, este método é responsável por:
+        - Verificar se o email já está em uso por outro registro
+        - Exclui o próprio usuário da verificação (para permitir manter o mesmo email)
+        
+        Args:
+            email: Email a ser verificado
+            user_id_excluir: ID do usuário que está sendo editado (para excluir da verificação)
+            
+        Returns:
+            bool: True se o email já está em uso por outro usuário, False caso contrário
+        """
+        users = db_json.load_users()
+        for user in users:
+            if user.email == email and user.id != user_id_excluir:
+                return True
+        return False
+    
+    @staticmethod
+    def update_user_in_db(user_id: int, user_update: schemas.UserUpdate) -> Optional[schemas.UserInDB]:
+        """
+        Atualiza um usuário no banco de dados.
+        
+        Conforme diagrama SD03, este método é responsável por:
+        - Atualizar os dados do usuário no banco de dados
+        - Retornar o usuário atualizado
+        
+        Args:
+            user_id: ID do usuário a ser atualizado
+            user_update: Objeto com os dados a serem atualizados
+            
+        Returns:
+            UserInDB: Usuário atualizado, ou None se não encontrado
+        """
+        return db_json.update_user_in_db(user_id, user_update)
 
