@@ -221,17 +221,61 @@ export const useCollectionDetails = () => {
   // Mantém handleSubmitItem para compatibilidade
   const handleSubmitItem = salvar;
 
-  // Exclui um item após confirmação do usuário
-  const handleDeleteItem = async (item) => {
-    if (window.confirm(`Tem certeza que deseja excluir "${item.name}"?`)) {
-      const success = await deleteItem(item.id);
+  /**
+   * Método removerItem() conforme diagrama SD06.
+   * Passo 1: Colecionador inicia a remoção de um item.
+   * 
+   * @param {object|number} itemOrId - Item completo ou ID do item a ser removido
+   * @returns {Promise<void>}
+   */
+  const removerItem = async (itemOrId) => {
+    // Normaliza: aceita objeto item ou apenas o id
+    const item = typeof itemOrId === 'object' ? itemOrId : items.find(i => i.id === itemOrId);
+    if (!item) return;
+    
+    const idItem = item.id || itemOrId;
+    
+    // Passo 2: FRM-REMOVERITEM pede confirmação ao usuário
+    const confirmado = await confirmar(item);
+    
+    if (confirmado) {
+      // Passo 3: FRM-REMOVERITEM → C-VISUALIZARCOLEC: removerItem(id_item, id_colecao)
+      const success = await deleteItem(idItem);
+      
       if (success) {
-        setItems(prevItems => prevItems.filter(i => i.id !== item.id));
+        // Passo 8: C-VISUALIZARCOLEC retorna confirmação
+        // Passo 9: FRM-REMOVERITEM atualiza a interface
+        atualizarListaRemocao(idItem);
       } else {
         alert("Erro ao excluir item.");
       }
     }
   };
+
+  /**
+   * Método confirmar() conforme diagrama SD06.
+   * Passo 2: A interface pede confirmação ao usuário.
+   * 
+   * @param {object} item - Item a ser removido
+   * @returns {Promise<boolean>} True se confirmado, False caso contrário
+   */
+  const confirmar = async (item) => {
+    return window.confirm(`Tem certeza que deseja excluir "${item.name}"?`);
+  };
+
+  /**
+   * Método atualizarLista() conforme diagrama SD06.
+   * Passo 9: FRM-REMOVERITEM atualiza a interface.
+   * 
+   * @param {number} idItemRemovido - ID do item que foi removido
+   * @returns {void}
+   */
+  const atualizarListaRemocao = (idItemRemovido) => {
+    setItems(prevItems => prevItems.filter(i => i.id !== idItemRemovido));
+  };
+
+  // Mantém handleDeleteItem para compatibilidade
+  const handleDeleteItem = removerItem;
 
   return {
     user,

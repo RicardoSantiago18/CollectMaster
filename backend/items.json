@@ -205,14 +205,5 @@
     "collection_id": 8,
     "id": 23,
     "image_url": "https://m.media-amazon.com/images/I/51jXNm-cKWL._AC_UF1000,1000_QL80_.jpg"
-  },
-  {
-    "name": "Meu item",
-    "description": "Meu melhor item",
-    "quantity": 1,
-    "estimated_value": 13.0,
-    "collection_id": 9,
-    "id": 24,
-    "image_url": "https://via.placeholder.com/150?text=Meu item"
   }
 ]

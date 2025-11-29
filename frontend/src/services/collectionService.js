@@ -156,13 +156,25 @@ export const updateItem = async (itemId, itemData) => {
   }
 };
 
-// Exclui um item do sistema
-// Retorna true se a exclusão foi bem-sucedida, false caso contrário
+/**
+ * Remove um item do sistema.
+ * Conforme diagrama SD06, este método corresponde a removerItem(id_item, id_colecao)
+ * chamado pelo controller C-VISUALIZARCOLEC.
+ * 
+ * Fluxo:
+ * - Passo 3: FRM-REMOVERITEM → C-VISUALIZARCOLEC: removerItem(id_item, id_colecao)
+ * - Passo 8: Retorna confirmação de remoção
+ * 
+ * @param {number} itemId - ID do item a ser removido
+ * @returns {Promise<boolean>} True se a exclusão foi bem-sucedida, false caso contrário
+ */
 export const deleteItem = async (itemId) => {
   try {
     const response = await fetch(`${API_URL}/items/${itemId}`, {
       method: 'DELETE',
     });
+    
+    // Passo 8: Retorna confirmação de remoção
     return response.ok; 
   } catch (error) {
     console.error('Erro de conexão no Delete:', error);

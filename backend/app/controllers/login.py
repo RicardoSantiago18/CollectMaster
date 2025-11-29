@@ -1,7 +1,7 @@
 """
 Controller C-VISUALIZARCOLEC
-Responsável pela lógica de controle dos casos de uso de login, criação de coleções e adição de itens.
-Implementa métodos conforme diagramas SD02, SD04 e SD05.
+Responsável pela lógica de controle dos casos de uso de login, criação de coleções, adição e remoção de itens.
+Implementa métodos conforme diagramas SD02, SD04, SD05 e SD06.
 """
 from fastapi import HTTPException, status
 from .. import schemas, security, db_json
@@ -163,4 +163,42 @@ class CVisualizarColec:
         )
         
         return item_public
+    
+    @staticmethod
+    def removerItem(id_item: int, id_colecao: int) -> bool:
+        """
+        Processa a remoção de um item de uma coleção.
+        
+        Conforme diagrama SD06:
+        - Recebe id_item e id_colecao da interface (FRM-REMOVERITEM)
+        - Busca a coleção em E-COLEÇÃO (buscar)
+        - Remove o item da coleção em E-COLEÇÃO (removerItem)
+        - E-COLEÇÃO chama E-ITEM para destruir o item
+        - Retorna confirmação de remoção
+        
+        Args:
+            id_item: ID do item a ser removido
+            id_colecao: ID da coleção à qual o item pertence
+            
+        Returns:
+            bool: True se o item foi removido com sucesso, False caso contrário
+            
+        Raises:
+            HTTPException: 404 se coleção não encontrada
+        """
+        # Passo 4: C-VISUALIZARCOLEC → E-COLEÇÃO: buscar(id_colecao)
+        colecao = EColecao.buscar(id_colecao=id_colecao)
+        
+        if not colecao:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Coleção não encontrada"
+            )
+        
+        # Passo 5: C-VISUALIZARCOLEC → E-COLEÇÃO: removerItem(id_item)
+        # Passo 6: E-COLEÇÃO → E-ITEM: removerItem() <<destroy>>
+        # Passo 7: E-COLEÇÃO retorna "Item removido com sucesso"
+        success = EColecao.removerItem(id_item=id_item)
+        
+        return success
 

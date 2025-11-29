@@ -1,7 +1,7 @@
 """
 Entidade E-ITEM
 Responsável por representar e gerenciar a lógica de domínio de itens.
-Implementa métodos conforme diagrama SD05.
+Implementa métodos conforme diagramas SD05 e SD06.
 """
 from .. import schemas, db_json
 
@@ -45,4 +45,21 @@ class EItem:
         created_item = db_json.create_item_in_db(item_to_save)
         
         return created_item
+    
+    @staticmethod
+    def removerItem(id_item: int) -> bool:
+        """
+        Remove um item do repositório (destrói o registro).
+        
+        Conforme diagrama SD06, este método é responsável por:
+        - Remover o registro do item do banco de dados ou repositório persistente
+        - Estereótipo <<destroy>>: operação de destruição do objeto
+        
+        Args:
+            id_item: ID do item a ser removido
+            
+        Returns:
+            bool: True se o item foi removido com sucesso, False caso contrário
+        """
+        return db_json.delete_item_in_db(item_id=id_item)
 

@@ -1,7 +1,7 @@
 """
 Entidade E-COLEÇÃO
 Responsável por representar e gerenciar a lógica de domínio de coleções.
-Implementa métodos conforme diagramas SD04 e SD05.
+Implementa métodos conforme diagramas SD04, SD05 e SD06.
 """
 from typing import Optional
 from .. import schemas, db_json
@@ -69,4 +69,38 @@ class EColecao:
         # Aqui apenas atualizamos as estatísticas da coleção
         # A função create_item_in_db já faz isso automaticamente
         return novo_item
+    
+    @staticmethod
+    def removerItem(id_item: int) -> bool:
+        """
+        Remove um item da coleção.
+        
+        Conforme diagrama SD06, este método é responsável por:
+        - Atualizar a lista interna de itens da coleção
+        - Preparar a remoção definitiva do item
+        - Chamar E-ITEM para destruir o item
+        
+        Args:
+            id_item: ID do item a ser removido
+            
+        Returns:
+            bool: True se o item foi removido com sucesso, False caso contrário
+        """
+        # Busca o item para obter o collection_id
+        items = db_json.load_items()
+        item_to_remove = None
+        for item in items:
+            if item.id == id_item:
+                item_to_remove = item
+                break
+        
+        if not item_to_remove:
+            return False
+        
+        # Passo 6: E-COLEÇÃO → E-ITEM: removerItem() <<destroy>>
+        from ..entities.item import EItem
+        success = EItem.removerItem(id_item=id_item)
+        
+        # As estatísticas da coleção são atualizadas automaticamente em delete_item_in_db
+        return success
 

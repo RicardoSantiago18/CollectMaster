@@ -33,7 +33,25 @@ async def update_item(item_id: int, item_update: schemas.ItemUpdate):
 
 @router.delete("/{item_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_item(item_id: int):
-    success = db_json.delete_item_in_db(item_id)
+    """
+    Endpoint HTTP para remoção de item.
+    Recebe requisição HTTP DELETE e chama o controller C-VISUALIZARCOLEC.
+    Conforme diagrama SD06.
+    
+    Nota: O collection_id é obtido do próprio item antes de removê-lo.
+    """
+    # Obtém collection_id do item antes de removê-lo
+    items = db_json.load_items()
+    item = next((i for i in items if i.id == item_id), None)
+    if not item:
+        raise HTTPException(status_code=404, detail="Item não encontrado")
+    
+    collection_id = item.collection_id
+    
+    # Passo 3: FRM-REMOVERITEM → C-VISUALIZARCOLEC: removerItem(id_item, id_colecao)
+    success = CVisualizarColec.removerItem(id_item=item_id, id_colecao=collection_id)
+    
     if not success:
         raise HTTPException(status_code=404, detail="Item não encontrado")
+    
     return None
