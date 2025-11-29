@@ -10,10 +10,16 @@ import {
 import {
   ArrowBack as ArrowBackIcon,
 } from '@mui/icons-material';
-import { getUserById } from '../../../services/userService';
-import { getCollections } from '../../../services/collectionService';
+import { carregarDadosPerfil } from '../../../services/userService';
 import SocialCollectionCard from '../components/SocialCollectionCard';
 
+/**
+ * FRM-VISUOUTRO - Interface de Visualização de Outro Colecionador
+ * Conforme diagrama SD07 - VISUALIZAR COLEÇÕES DE OUTROS COLECIONADORES
+ * 
+ * Este componente representa a interface de visualização de outro colecionador (FRM-VISUOUTRO).
+ * Permite ao colecionador visualizar o perfil e as coleções de outro usuário.
+ */
 const SocialUserCollectionsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -31,31 +37,39 @@ const SocialUserCollectionsPage = () => {
     setUser(JSON.parse(storedUser));
   }, [navigate]);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      if (!id) return;
+  /**
+   * Método selecionarPerfil() conforme diagrama SD07.
+   * Passo 1: Colecionador seleciona o perfil de outro usuário.
+   * 
+   * @param {number} id_outro - ID do colecionador alvo
+   * @returns {Promise<void>}
+   */
+  const selecionarPerfil = async (id_outro) => {
+    if (!id_outro) return;
 
-      try {
-        const fetchedUser = await getUserById(id);
-        if (fetchedUser) {
-          setViewingUser(fetchedUser);
-          // Buscar apenas coleções públicas do usuário
-          const userCollections = await getCollections(id);
-          const publicCollections = userCollections.filter((c) => c.is_public || c.isPublic);
-          setCollections(publicCollections);
-        } else {
-          navigate('/social');
-        }
-      } catch (error) {
-        console.error('Erro ao buscar dados do usuário:', error);
+    try {
+      // Passo 1.1: FRM-VISUOUTRO → VISUOUTRO: carregarDadosPerfil(id_outro)
+      const dadosCompletos = await carregarDadosPerfil(id_outro);
+      
+      if (dadosCompletos) {
+        // Passo 5: VISUOUTRO retorna dados completos (perfil + coleções)
+        // Passo 6: FRM-VISUOUTRO atualiza a interface
+        setViewingUser(dadosCompletos.perfil);
+        setCollections(dadosCompletos.colecoes || []);
+      } else {
         navigate('/social');
-      } finally {
-        setLoading(false);
       }
-    };
+    } catch (error) {
+      console.error('Erro ao buscar dados do usuário:', error);
+      navigate('/social');
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     if (id) {
-      fetchUserData();
+      selecionarPerfil(parseInt(id));
     }
   }, [id, navigate]);
 

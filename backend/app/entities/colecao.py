@@ -1,9 +1,9 @@
 """
 Entidade E-COLEÇÃO
 Responsável por representar e gerenciar a lógica de domínio de coleções.
-Implementa métodos conforme diagramas SD04, SD05 e SD06.
+Implementa métodos conforme diagramas SD04, SD05, SD06 e SD07.
 """
-from typing import Optional
+from typing import Optional, List
 from .. import schemas, db_json
 
 
@@ -103,4 +103,38 @@ class EColecao:
         
         # As estatísticas da coleção são atualizadas automaticamente em delete_item_in_db
         return success
+    
+    @staticmethod
+    def buscarColecao(id_alvo: int) -> List[schemas.CollectionPublic]:
+        """
+        Busca as coleções de um colecionador pelo ID do dono.
+        
+        Conforme diagrama SD07, este método é responsável por:
+        - Buscar todas as coleções do colecionador alvo (id_alvo)
+        - Retornar lista de coleções públicas
+        
+        Args:
+            id_alvo: ID do colecionador (owner_id) cujas coleções serão buscadas
+            
+        Returns:
+            List[CollectionPublic]: Lista de coleções do colecionador (apenas públicas)
+        """
+        collections = db_json.get_collections_by_owner_id(owner_id=id_alvo)
+        
+        # Converte para CollectionPublic e filtra apenas públicas
+        collections_public = []
+        for col in collections:
+            if col.is_public:
+                collections_public.append(schemas.CollectionPublic(
+                    id=col.id,
+                    name=col.name,
+                    description=col.description,
+                    is_public=col.is_public,
+                    owner_id=col.owner_id,
+                    image_url=col.image_url,
+                    value=col.value,
+                    itemCount=col.itemCount
+                ))
+        
+        return collections_public
 

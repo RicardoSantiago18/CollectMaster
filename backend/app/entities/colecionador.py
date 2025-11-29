@@ -1,7 +1,7 @@
 """
 Entidade E-COLECIONADOR
 Responsável por representar e gerenciar a lógica de domínio do colecionador.
-Implementa métodos conforme diagramas SD01, SD02 e SD03.
+Implementa métodos conforme diagramas SD01, SD02, SD03 e SD07.
 """
 from typing import Optional, List
 from .. import schemas, db_json, security
@@ -126,4 +126,33 @@ class EColecionador:
             UserInDB: Usuário atualizado, ou None se não encontrado
         """
         return db_json.update_user_in_db(user_id, user_update)
+    
+    @staticmethod
+    def buscarUsuario(id_outro: int) -> Optional[schemas.UserPublic]:
+        """
+        Busca um usuário (colecionador) pelo ID.
+        
+        Conforme diagrama SD07, este método é responsável por:
+        - Buscar os dados básicos do colecionador alvo (nome, bio, avatar etc.)
+        - Retornar apenas dados públicos (sem informações sensíveis)
+        
+        Args:
+            id_outro: ID do colecionador a ser buscado
+            
+        Returns:
+            UserPublic: Objeto com dados públicos do colecionador, ou None se não existir
+        """
+        users = db_json.load_users()
+        user = next((u for u in users if u.id == id_outro), None)
+        
+        if not user:
+            return None
+        
+        # Retorna apenas dados públicos
+        return schemas.UserPublic(
+            id=user.id,
+            name=user.name,
+            email=user.email,
+            bio=user.bio
+        )
 

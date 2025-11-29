@@ -28,6 +28,33 @@ export const getUserById = async (userId) => {
   }
 };
 
+/**
+ * Carrega dados completos do perfil de outro colecionador.
+ * Conforme diagrama SD07, este método corresponde a carregarDadosPerfil(id_outro)
+ * chamado pelo controller VISUOUTRO.
+ * 
+ * Fluxo:
+ * - Passo 1.1: FRM-VISUOUTRO → VISUOUTRO: carregarDadosPerfil(id_outro)
+ * - Passo 5: Retorna dados completos (perfil + coleções)
+ * 
+ * @param {number} userId - ID do colecionador alvo
+ * @returns {Promise<{perfil: object, colecoes: array}|null>} Dados completos ou null em caso de erro
+ */
+export const carregarDadosPerfil = async (userId) => {
+  try {
+    const response = await fetch(`${API_URL}/users/${userId}/profile`);
+    if (response.ok) {
+      // Passo 5: Retorna dados completos (perfil + coleções)
+      return await response.json();
+    }
+    console.error('Erro ao buscar perfil completo:', await response.json());
+    return null;
+  } catch (error) {
+    console.error('Erro de conexão ao buscar perfil completo:', error);
+    return null;
+  }
+};
+
 export const searchUsers = async (searchQuery) => {
   try {
     // A API no backend deve esperar o parâmetro ?search=...
