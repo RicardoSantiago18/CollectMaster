@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from .. import schemas, security, db_json
 from ..controllers.cadastro import CCadastro
+from ..controllers.login import CVisualizarColec
 
 router = APIRouter()
 
@@ -21,14 +22,15 @@ async def register_user(user: schemas.UserCreate):
 
 @router.post("/login", response_model=schemas.UserPublic)
 async def login_user(form_data: schemas.LoginRequest):
+    """
+    Endpoint HTTP para login de usuário.
+    Recebe requisição HTTP e chama o controller C-VISUALIZARCOLEC.
+    Conforme diagrama SD02.
+    """
+    # Chama o controller C-VISUALIZARCOLEC conforme diagrama SD02
+    user_public = CVisualizarColec.loginUser(
+        email=form_data.email,
+        senha=form_data.password
+    )
     
-    user = db_json.get_user_by_email(email=form_data.email)
-    
-    if not user or not security.verify_password(form_data.password, user.hashed_password):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Email ou senha incorretos",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-    
-    return user
+    return user_public
