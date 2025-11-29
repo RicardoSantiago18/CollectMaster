@@ -1,12 +1,13 @@
 """
 Controller C-VISUALIZARCOLEC
-Responsável pela lógica de controle dos casos de uso de login e criação de coleções.
-Implementa métodos conforme diagramas SD02 e SD04.
+Responsável pela lógica de controle dos casos de uso de login, criação de coleções e adição de itens.
+Implementa métodos conforme diagramas SD02, SD04 e SD05.
 """
 from fastapi import HTTPException, status
 from .. import schemas, security, db_json
 from ..entities.colecionador import EColecionador
 from ..entities.colecao import EColecao
+from ..entities.item import EItem
 
 
 class CVisualizarColec:
@@ -110,4 +111,56 @@ class CVisualizarColec:
         )
         
         return collection_public
+    
+    @staticmethod
+    def adicionarItem(dados_item: schemas.ItemCreate, id_colecao: int) -> schemas.ItemPublic:
+        """
+        Processa a adição de um item a uma coleção.
+        
+        Conforme diagrama SD05:
+        - Recebe dadosItem e id_colecao da interface (FRM-ADDITEM)
+        - Cria o item em E-ITEM (dadosItem)
+        - Busca a coleção em E-COLEÇÃO (buscar)
+        - Adiciona o item à coleção em E-COLEÇÃO (adicionar)
+        - Retorna o item adicionado
+        
+        Args:
+            dados_item: Objeto ItemCreate com os dados do item
+            id_colecao: ID da coleção na qual o item será adicionado
+            
+        Returns:
+            ItemPublic: Objeto do item adicionado
+            
+        Raises:
+            HTTPException: 404 se coleção não encontrada
+        """
+        # Passo 5: C-VISUALIZARCOLEC → E-ITEM: dadosItem() <<create>>
+        novo_item = EItem.dadosItem(dados_item=dados_item)
+        
+        # Passo 6: C-VISUALIZARCOLEC → E-COLEÇÃO: buscar(id_colecao)
+        colecao = EColecao.buscar(id_colecao=id_colecao)
+        
+        if not colecao:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Coleção não encontrada"
+            )
+        
+        # Passo 7: C-VISUALIZARCOLEC → E-COLEÇÃO: adicionar(novoItem)
+        # O item já foi criado e persistido em E-ITEM
+        # A função create_item_in_db já atualiza as estatísticas da coleção
+        item_adicionado = EColecao.adicionar(novo_item=novo_item)
+        
+        # Passo 8: Retorna item adicionado (ItemPublic)
+        item_public = schemas.ItemPublic(
+            id=item_adicionado.id,
+            name=item_adicionado.name,
+            description=item_adicionado.description,
+            quantity=item_adicionado.quantity,
+            estimated_value=item_adicionado.estimated_value,
+            collection_id=item_adicionado.collection_id,
+            image_url=item_adicionado.image_url
+        )
+        
+        return item_public
 

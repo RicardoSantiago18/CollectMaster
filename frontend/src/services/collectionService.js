@@ -93,8 +93,18 @@ export const getCollectionItems = async (collectionId) => {
   }
 };
 
-// Cria um novo item em uma coleção
-// Converte os valores numéricos e associa o item à coleção
+/**
+ * Cria um novo item em uma coleção.
+ * Conforme diagrama SD05, este método corresponde a adicionarItem(dadosItem, id_colecao)
+ * chamado pelo controller C-VISUALIZARCOLEC.
+ * 
+ * Fluxo:
+ * - Passo 4: FRM-ADDITEM → C-VISUALIZARCOLEC: adicionarItem(dadosItem, id_colecao)
+ * - Passo 8: Retorna item adicionado
+ * 
+ * @param {object} itemData - Objeto com os dados do item e collectionId
+ * @returns {Promise<object|null>} Item criado ou null em caso de erro
+ */
 export const createItem = async (itemData) => {
   try {
     const response = await fetch(`${API_URL}/items/`, {
@@ -110,7 +120,10 @@ export const createItem = async (itemData) => {
       }),
     });
 
-    if (response.ok) return await response.json();
+    // Passo 8: Retorna item adicionado
+    if (response.ok) {
+      return await response.json();
+    }
     console.error('Erro API ao criar Item:', await response.json());
     return null;
   } catch (error) {

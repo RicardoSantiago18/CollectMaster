@@ -1,26 +1,24 @@
 from fastapi import APIRouter, HTTPException, status
 from typing import List
 from .. import schemas, db_json
+from ..controllers.login import CVisualizarColec
 
 router = APIRouter()
 
 @router.post("/", response_model=schemas.ItemPublic, status_code=status.HTTP_201_CREATED)
 async def create_new_item(item_data: schemas.ItemCreate):
-    # 1. Gerar ID
-    all_items = db_json.load_items()
-    new_id = 1 if not all_items else all_items[-1].id + 1
-    
-    # 2. Imagem Placeholder
-    image_url = f"https://via.placeholder.com/150?text={item_data.name}"
-
-    # 3. Criar objeto
-    item_to_save = schemas.ItemInDB(
-        id=new_id,
-        image_url=image_url,
-        **item_data.model_dump()
+    """
+    Endpoint HTTP para criação de item.
+    Recebe requisição HTTP POST e chama o controller C-VISUALIZARCOLEC.
+    Conforme diagrama SD05.
+    """
+    # Passo 4: FRM-ADDITEM → C-VISUALIZARCOLEC: adicionarItem(dadosItem, id_colecao)
+    item_public = CVisualizarColec.adicionarItem(
+        dados_item=item_data,
+        id_colecao=item_data.collection_id
     )
     
-    return db_json.create_item_in_db(item_to_save)
+    return item_public
 
 @router.get("/collection/{collection_id}", response_model=List[schemas.ItemPublic])
 async def get_items(collection_id: int):
