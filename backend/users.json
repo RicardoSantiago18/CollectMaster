@@ -47,5 +47,12 @@
     "email": "contateste@teste.com",
     "hashed_password": "$2b$12$vEDI/qxwh73IhT./XvRy8.UIl.VbsnjJzJY.cn9G5dSOfrdG3AHWa",
     "bio": "Ol\u00e1, sou apenas uma conta de testes"
+  },
+  {
+    "id": 8,
+    "name": "Usuario",
+    "email": "usuario@gmail.com",
+    "hashed_password": "$2b$12$FL6rw.8xWwAFoqTiILzfEum7tirO8GKVkNid.wsPSmI3tf.AZ.vB.",
+    "bio": null
   }
 ]
