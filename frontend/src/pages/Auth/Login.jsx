@@ -22,10 +22,17 @@ import {
 } from '@mui/icons-material';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
-// Importa o hook que gerencia a lógica do formulário de login
+/**
+ * FRM-REALIZARLOGIN - Formulário/Tela de Login
+ * Conforme diagrama SD02 - REALIZAR LOGIN
+ * 
+ * Este componente representa a interface de login (FRM-REALIZARLOGIN).
+ * Recebe email e senha do colecionador através do método insereEmailESenha()
+ * e exibe erro em caso de falha ou salva dados no localStorage em caso de sucesso.
+ */
 import { useLoginForm } from '../../hooks/useLoginForm';
 
-// Componente visual do formulário de login
+// Componente visual do formulário de login (FRM-REALIZARLOGIN)
 // Recebe todas as props do hook useLoginForm
 const LoginView = ({
   formData,
@@ -298,7 +305,18 @@ const LoginView = ({
   );
 };
 
-// Componente principal de Login que conecta a lógica com a visualização
+/**
+ * Componente principal de Login (FRM-REALIZARLOGIN)
+ * Conecta a lógica do hook useLoginForm com a visualização LoginView.
+ * 
+ * Fluxo conforme diagrama SD02:
+ * 1. Colecionador → FRM-REALIZARLOGIN: insereEmailESenha()
+ * 2. FRM-REALIZARLOGIN → C-VISUALIZARCOLEC: loginUser(email, senha)
+ * 3. C-VISUALIZARCOLEC → E-COLECIONADOR: get_user_by_email(email)
+ * 4. E-COLECIONADOR → C-VISUALIZARCOLEC: retorna UserInDB
+ * 5-7. Se senha inválida: 401 Unauthorized → Exibe erro
+ * 8-10. Se senha válida: 200 OK → Retorna dados → Salva no localStorage
+ */
 const Login = () => {
   const logic = useLoginForm();
   

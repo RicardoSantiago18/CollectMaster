@@ -44,9 +44,22 @@ export const criarUsuario = async (nome, email, senha) => {
 // Mantém registerUser para compatibilidade (deprecated)
 export const registerUser = criarUsuario;
 
-// Realiza login do usuário e salva os dados no localStorage
-// Retorna um objeto com success: true/false e data ou error
-export const loginUser = async (email, password) => {
+/**
+ * Realiza login do usuário.
+ * Conforme diagrama SD02, este método corresponde a loginUser(email, senha)
+ * chamado pelo controller C-VISUALIZARCOLEC.
+ * 
+ * Fluxo:
+ * - Passo 2: FRM-REALIZARLOGIN → C-VISUALIZARCOLEC: loginUser(email, senha)
+ * - Passo 5: Retorna 401 Unauthorized se senha inválida
+ * - Passo 8: Retorna 200 OK com UserPublic se senha válida
+ * - Passo 10: Salva dados no localStorage
+ * 
+ * @param {string} email - Email do usuário
+ * @param {string} senha - Senha do usuário
+ * @returns {Promise<{success: boolean, data?: object, error?: string}>}
+ */
+export const loginUser = async (email, senha) => {
   try {
     const response = await fetch('http://localhost:8000/api/auth/login', {
       method: 'POST',
@@ -55,18 +68,26 @@ export const loginUser = async (email, password) => {
       },
       body: JSON.stringify({
         email: email,
-        password: password,
+        password: senha,
       }),
     });
 
+    // Caso 2 - Senha válida (Passo 8): 200 OK com UserPublic
     if (response.ok) {
       const userData = await response.json();
-      // Salva o usuário no localStorage para "lembrar" dele
+      // Passo 10: Salva no localStorage
       localStorage.setItem('user', JSON.stringify(userData));
       return { success: true, data: userData };
-    } else {
+    } 
+    // Caso 1 - Senha inválida (Passo 5): 401 Unauthorized
+    else if (response.status === 401) {
       const errorData = await response.json();
       return { success: false, error: errorData.detail || 'Email ou senha incorretos' };
+    } 
+    // Outros erros
+    else {
+      const errorData = await response.json();
+      return { success: false, error: errorData.detail || 'Erro ao realizar login' };
     }
   } catch (error) {
     return { success: false, error: 'Erro de conexão. Tente novamente.' };
