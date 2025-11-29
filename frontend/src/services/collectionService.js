@@ -15,8 +15,18 @@ export const getCollections = async (userId) => {
   }
 };
 
-// Cria uma nova coleção no sistema
-// Recebe um objeto com os dados da coleção e converte camelCase para snake_case
+/**
+ * Cria uma nova coleção no sistema.
+ * Conforme diagrama SD04, este método corresponde a createCollection(dados)
+ * chamado pelo controller C-VISUALIZARCOLEC.
+ * 
+ * Fluxo:
+ * - Passo 3.1: FRM-CRIARCOLEC → C-VISUALIZARCOLEC: createCollection(dados)
+ * - Passo 8: Retorna nova coleção criada
+ * 
+ * @param {object} collectionData - Objeto com os dados da coleção
+ * @returns {Promise<object|null>} Nova coleção criada ou null em caso de erro
+ */
 export const createCollection = async (collectionData) => {
   try {
     const response = await fetch(`${API_URL}/collections/`, {
@@ -31,7 +41,10 @@ export const createCollection = async (collectionData) => {
       }),
     });
 
-    if (response.ok) return await response.json();
+    // Passo 8: Retorna nova coleção
+    if (response.ok) {
+      return await response.json();
+    }
     console.error('Erro API criar coleção:', await response.json());
     return null;
   } catch (error) {

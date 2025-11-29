@@ -2,8 +2,20 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getCollections, createCollection, updateCollection, deleteCollection } from '../services/collectionService'; 
 
-// Hook customizado que gerencia toda a lógica do Dashboard
-// Retorna estados e funções para gerenciar coleções, modais e formulários
+/**
+ * Hook customizado que gerencia toda a lógica do Dashboard.
+ * Implementa o fluxo conforme diagrama SD04 - CRIAR COLEÇÃO.
+ * 
+ * Conforme diagrama:
+ * - FRM-CRIARCOLEC: Componente Dashboard.jsx (interface)
+ * - criarNovaColecao(): Método que aciona a criação
+ * - abrirModal(): Abre o modal de criação
+ * - preencherInfo(): Preenche os campos do formulário
+ * - criarColecao(): Confirma a criação
+ * - fecharModal(): Fecha o modal após sucesso
+ * - atualizarColecoes(): Atualiza o estado com a nova coleção
+ * - exibirColecao(): Exibe a nova coleção na interface
+ */
 export const useDashboard = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
@@ -42,12 +54,31 @@ export const useDashboard = () => {
     }
   }, [user]);
 
-  // Abre o modal para criar uma nova coleção (limpa o formulário)
-  const handleOpenCreateModal = () => {
+  /**
+   * Método criarNovaColecao() conforme diagrama SD04.
+   * Passo 1: Colecionador inicia a criação de uma nova coleção.
+   * 
+   * @returns {void}
+   */
+  const criarNovaColecao = () => {
+    // Passo 1.1: FRM-CRIARCOLEC abre o modal
+    abrirModal();
+  };
+
+  /**
+   * Método abrirModal() conforme diagrama SD04.
+   * Passo 1.1: Abre o modal ou tela de criação.
+   * 
+   * @returns {void}
+   */
+  const abrirModal = () => {
     setEditingCollection(null); // Garante modo criação
     setFormData({ name: '', description: '', imageUrl: '', isPublic: true });
     setOpenCreateModal(true);
   };
+
+  // Mantém handleOpenCreateModal para compatibilidade
+  const handleOpenCreateModal = criarNovaColecao;
 
   // Abre o modal preenchido com os dados da coleção para edição
   const handleEditCollection = (collection) => {
@@ -61,14 +92,28 @@ export const useDashboard = () => {
     setOpenCreateModal(true);
   };
 
-  // Fecha o modal e limpa o estado de edição
-  const handleCloseCreateModal = () => {
+  /**
+   * Método fecharModal() conforme diagrama SD04.
+   * Passo 3.2: Fecha o modal após criação bem-sucedida.
+   * 
+   * @returns {void}
+   */
+  const fecharModal = () => {
     setOpenCreateModal(false);
     setEditingCollection(null);
   };
 
-  // Atualiza os campos do formulário quando o usuário digita
-  const handleInputChange = (e) => {
+  // Mantém handleCloseCreateModal para compatibilidade
+  const handleCloseCreateModal = fecharModal;
+
+  /**
+   * Método preencherInfo() conforme diagrama SD04.
+   * Passo 2: Colecionador preenche os campos do formulário.
+   * 
+   * @param {Event} e - Evento de mudança no input
+   * @returns {void}
+   */
+  const preencherInfo = (e) => {
     const { name, value, checked, type } = e.target;
     setFormData(prev => ({
         ...prev,
@@ -76,8 +121,21 @@ export const useDashboard = () => {
     }));
   };
 
-  // Salva ou atualiza uma coleção (criação ou edição)
-  const handleSubmitCollection = async () => {
+  // Mantém handleInputChange para compatibilidade
+  const handleInputChange = preencherInfo;
+
+  /**
+   * Método criarColecao() conforme diagrama SD04.
+   * Passo 3: Colecionador confirma a criação.
+   * 
+   * Passo 3.1: Chama createCollection(dados)
+   * Passo 3.2: Fecha o modal
+   * Passo 4: Atualiza coleções
+   * Passo 5: Exibe coleção
+   * 
+   * @returns {Promise<void>}
+   */
+  const criarColecao = async () => {
     if (!formData.name.trim()) return;
     if (!user) return;
     
@@ -87,25 +145,48 @@ export const useDashboard = () => {
         // MODO EDIÇÃO: atualiza coleção existente
         result = await updateCollection(editingCollection.id, formData);
         if (result) {
-            setCollections(prev => prev.map(col => col.id === editingCollection.id ? result : col));
+            atualizarColecoes(result, true); // true = modo edição
         }
     } else {
         // MODO CRIAÇÃO: cria nova coleção
+        // Passo 3.1: FRM-CRIARCOLEC → C-VISUALIZARCOLEC: createCollection(dados)
         result = await createCollection({
             ...formData,
             ownerId: user.id
         });
         if (result) {
-            setCollections([...collections, result]);
+            // Passo 8: C-VISUALIZARCOLEC retorna nova coleção
+            // Passo 3.2: FRM-CRIARCOLEC fecha o modal
+            fecharModal();
+            // Passo 4: FRM-CRIARCOLEC atualiza coleções
+            atualizarColecoes(result, false); // false = modo criação
+            // Passo 5: Exibe coleção (já está na lista atualizada)
         }
     }
 
-    if (result) {
-        handleCloseCreateModal();
-    } else {
+    if (!result) {
         alert("Erro ao salvar coleção.");
     }
   };
+
+  /**
+   * Método atualizarColecoes() conforme diagrama SD04.
+   * Passo 4: Atualiza o estado da lista de coleções.
+   * 
+   * @param {object} novaColecao - Nova coleção criada
+   * @param {boolean} isEdit - Se true, atualiza coleção existente; se false, adiciona nova
+   * @returns {void}
+   */
+  const atualizarColecoes = (novaColecao, isEdit = false) => {
+    if (isEdit) {
+      setCollections(prev => prev.map(col => col.id === novaColecao.id ? novaColecao : col));
+    } else {
+      setCollections(prev => [...prev, novaColecao]);
+    }
+  };
+
+  // Mantém handleSubmitCollection para compatibilidade
+  const handleSubmitCollection = criarColecao;
 
   // Exclui uma coleção após confirmação do usuário
   const handleDeleteCollection = async (collection) => {

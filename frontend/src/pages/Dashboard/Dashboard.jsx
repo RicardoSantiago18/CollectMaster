@@ -19,7 +19,14 @@ const ModalTransition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-// Componente visual do Dashboard que exibe as coleções do usuário
+/**
+ * FRM-CRIARCOLEC - Formulário/Tela/Modal de Criação de Coleção
+ * Conforme diagrama SD04 - CRIAR COLEÇÃO
+ * 
+ * Este componente representa a interface de criação de coleção (FRM-CRIARCOLEC).
+ * Permite ao colecionador criar uma nova coleção através de um modal.
+ */
+// Componente visual do Dashboard que exibe as coleções do usuário (FRM-CRIARCOLEC)
 // Recebe todas as props do hook useDashboard
 const DashboardView = ({
   user, collections,
@@ -171,7 +178,23 @@ const DashboardView = ({
   );
 };
 
-// Componente principal do Dashboard que conecta a lógica com a visualização
+/**
+ * Componente principal do Dashboard (FRM-CRIARCOLEC)
+ * Conecta a lógica do hook useDashboard com a visualização DashboardView.
+ * 
+ * Fluxo conforme diagrama SD04:
+ * 1. Colecionador → FRM-CRIARCOLEC: criarNovaColecao()
+ * 2. FRM-CRIARCOLEC → FRM-CRIARCOLEC: abrirModal()
+ * 3. Colecionador → FRM-CRIARCOLEC: preencherInfo()
+ * 4. Colecionador → FRM-CRIARCOLEC: criarColecao()
+ * 5. FRM-CRIARCOLEC → C-VISUALIZARCOLEC: createCollection(dados)
+ * 6. C-VISUALIZARCOLEC → E-COLEÇÃO: create_collection_in_db()
+ * 7. E-COLEÇÃO → C-VISUALIZARCOLEC: retorna objeto criado
+ * 8. C-VISUALIZARCOLEC → FRM-CRIARCOLEC: retorna nova coleção
+ * 9. FRM-CRIARCOLEC → FRM-CRIARCOLEC: fecharModal()
+ * 10. FRM-CRIARCOLEC → FRM-CRIARCOLEC: atualizarColecoes(state)
+ * 11. FRM-CRIARCOLEC → Colecionador: exibirColecao()
+ */
 const Dashboard = () => {
   const logic = useDashboard();
   return <DashboardView {...logic} />;

@@ -1,11 +1,12 @@
 """
 Controller C-VISUALIZARCOLEC
-Responsável pela lógica de controle do caso de uso de login.
-Implementa o método loginUser() conforme diagrama SD02.
+Responsável pela lógica de controle dos casos de uso de login e criação de coleções.
+Implementa métodos conforme diagramas SD02 e SD04.
 """
 from fastapi import HTTPException, status
-from .. import schemas, security
+from .. import schemas, security, db_json
 from ..entities.colecionador import EColecionador
+from ..entities.colecao import EColecao
 
 
 class CVisualizarColec:
@@ -58,4 +59,55 @@ class CVisualizarColec:
         )
         
         return user_public
+    
+    @staticmethod
+    def createCollection(dados: schemas.CollectionCreate) -> schemas.CollectionPublic:
+        """
+        Processa a criação de uma nova coleção.
+        
+        Conforme diagrama SD04:
+        - Recebe dados da interface (FRM-CRIARCOLEC)
+        - Chama E-COLEÇÃO.create_collection_in_db()
+        - Retorna a nova coleção criada
+        
+        Args:
+            dados: Objeto CollectionCreate com os dados da nova coleção
+            
+        Returns:
+            CollectionPublic: Objeto da nova coleção criada
+        """
+        # Passo 6: C-VISUALIZARCOLEC → E-COLEÇÃO: create_collection_in_db()
+        all_collections = db_json.load_collections()
+        new_id = 1 if not all_collections else all_collections[-1].id + 1
+        
+        # Usa a imagem enviada OU um placeholder se estiver vazia
+        final_image = dados.image_url or f"https://via.placeholder.com/300x200/4F518C/FFFFFF?text={dados.name}"
+        
+        collection_to_save = schemas.CollectionInDB(
+            id=new_id,
+            name=dados.name,
+            description=dados.description,
+            is_public=dados.is_public,
+            owner_id=dados.owner_id,
+            image_url=final_image,
+            value=0.0,
+            itemCount=0
+        )
+        
+        # Passo 7: E-COLEÇÃO retorna objeto criado
+        created_collection = EColecao.create_collection_in_db(collection_to_save)
+        
+        # Passo 8: Retorna nova coleção (CollectionPublic)
+        collection_public = schemas.CollectionPublic(
+            id=created_collection.id,
+            name=created_collection.name,
+            description=created_collection.description,
+            is_public=created_collection.is_public,
+            owner_id=created_collection.owner_id,
+            image_url=created_collection.image_url,
+            value=created_collection.value,
+            itemCount=created_collection.itemCount
+        )
+        
+        return collection_public
 
