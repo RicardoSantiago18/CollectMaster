@@ -9,7 +9,7 @@ import { loginUser } from '../services/authService';
  * Conforme diagrama:
  * - FRM-REALIZARLOGIN: Componente Login.jsx (interface)
  * - insereEmailESenha(): Método que recebe dados do colecionador
- * - loginUser(): Chama o serviço que comunica com C-VISUALIZARCOLEC
+ * - loginUser(): Chama o serviço que comunica com C-REALIZARLOGIN
  * - Exibe erro(): Mostra mensagem de erro em caso de falha
  * - Salva no localStorage(): Salva dados do usuário autenticado
  */
@@ -40,14 +40,14 @@ export const useLoginForm = () => {
   /**
    * Método insereEmailESenha() conforme diagrama SD02.
    * Passo 1: Recebe email e senha do colecionador.
-   * Passo 2: Chama loginUser() que comunica com C-VISUALIZARCOLEC.
+   * Passo 2: Chama loginUser() que comunica com C-REALIZARLOGIN.
    * 
    * @param {string} email - Email do colecionador
    * @param {string} senha - Senha do colecionador
    * @returns {Promise<{success: boolean, data?: object, error?: string}>}
    */
   const insereEmailESenha = async (email, senha) => {
-    // Passo 2 do diagrama: chama loginUser (que comunica com C-VISUALIZARCOLEC)
+    // Passo 2 do diagrama: chama loginUser (que comunica com C-REALIZARLOGIN)
     const result = await loginUser(email, senha);
 
     if (result.success) {

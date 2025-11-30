@@ -47,10 +47,10 @@ export const registerUser = criarUsuario;
 /**
  * Realiza login do usuário.
  * Conforme diagrama SD02, este método corresponde a loginUser(email, senha)
- * chamado pelo controller C-VISUALIZARCOLEC.
+ * chamado pelo controller C-REALIZARLOGIN.
  * 
  * Fluxo:
- * - Passo 2: FRM-REALIZARLOGIN → C-VISUALIZARCOLEC: loginUser(email, senha)
+ * - Passo 2: FRM-REALIZARLOGIN → C-REALIZARLOGIN: loginUser(email, senha)
  * - Passo 5: Retorna 401 Unauthorized se senha inválida
  * - Passo 8: Retorna 200 OK com UserPublic se senha válida
  * - Passo 10: Salva dados no localStorage

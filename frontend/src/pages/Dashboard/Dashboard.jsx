@@ -187,10 +187,10 @@ const DashboardView = ({
  * 2. FRM-CRIARCOLEC → FRM-CRIARCOLEC: abrirModal()
  * 3. Colecionador → FRM-CRIARCOLEC: preencherInfo()
  * 4. Colecionador → FRM-CRIARCOLEC: criarColecao()
- * 5. FRM-CRIARCOLEC → C-VISUALIZARCOLEC: createCollection(dados)
- * 6. C-VISUALIZARCOLEC → E-COLEÇÃO: create_collection_in_db()
- * 7. E-COLEÇÃO → C-VISUALIZARCOLEC: retorna objeto criado
- * 8. C-VISUALIZARCOLEC → FRM-CRIARCOLEC: retorna nova coleção
+ * 5. FRM-CRIARCOLEC → C-COLECOES: createCollection(dados)
+ * 6. C-COLECOES → E-COLEÇÃO: create_collection_in_db()
+ * 7. E-COLEÇÃO → C-COLECOES: retorna objeto criado
+ * 8. C-COLECOES → FRM-CRIARCOLEC: retorna nova coleção
  * 9. FRM-CRIARCOLEC → FRM-CRIARCOLEC: fecharModal()
  * 10. FRM-CRIARCOLEC → FRM-CRIARCOLEC: atualizarColecoes(state)
  * 11. FRM-CRIARCOLEC → Colecionador: exibirColecao()

@@ -174,14 +174,14 @@ export const useCollectionDetails = () => {
       }
     } else {
       // MODO CREATE: cria novo item
-      // Passo 4: FRM-ADDITEM → C-VISUALIZARCOLEC: adicionarItem(dadosItem, id_colecao)
+      // Passo 4: FRM-ADDITEM → C-COLECOES: adicionarItem(dadosItem, id_colecao)
       result = await createItem({
         ...newItemData,
         collectionId: id
       });
       
       if (result) {
-        // Passo 8: C-VISUALIZARCOLEC retorna item adicionado
+        // Passo 8: C-COLECOES retorna item adicionado
         // Passo 9: FRM-ADDITEM atualiza a lista
         atualizarLista(result, false); // false = modo criação
       }
@@ -239,11 +239,11 @@ export const useCollectionDetails = () => {
     const confirmado = await confirmar(item);
     
     if (confirmado) {
-      // Passo 3: FRM-REMOVERITEM → C-VISUALIZARCOLEC: removerItem(id_item, id_colecao)
+      // Passo 3: FRM-REMOVERITEM → C-COLECOES: removerItem(id_item, id_colecao)
       const success = await deleteItem(idItem);
       
       if (success) {
-        // Passo 8: C-VISUALIZARCOLEC retorna confirmação
+        // Passo 8: C-COLECOES retorna confirmação
         // Passo 9: FRM-REMOVERITEM atualiza a interface
         atualizarListaRemocao(idItem);
       } else {

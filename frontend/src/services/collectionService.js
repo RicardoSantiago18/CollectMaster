@@ -18,10 +18,10 @@ export const getCollections = async (userId) => {
 /**
  * Cria uma nova coleção no sistema.
  * Conforme diagrama SD04, este método corresponde a createCollection(dados)
- * chamado pelo controller C-VISUALIZARCOLEC.
+ * chamado pelo controller C-COLECOES.
  * 
  * Fluxo:
- * - Passo 3.1: FRM-CRIARCOLEC → C-VISUALIZARCOLEC: createCollection(dados)
+ * - Passo 3.1: FRM-CRIARCOLEC → C-COLECOES: createCollection(dados)
  * - Passo 8: Retorna nova coleção criada
  * 
  * @param {object} collectionData - Objeto com os dados da coleção
@@ -96,10 +96,10 @@ export const getCollectionItems = async (collectionId) => {
 /**
  * Cria um novo item em uma coleção.
  * Conforme diagrama SD05, este método corresponde a adicionarItem(dadosItem, id_colecao)
- * chamado pelo controller C-VISUALIZARCOLEC.
+ * chamado pelo controller C-COLECOES.
  * 
  * Fluxo:
- * - Passo 4: FRM-ADDITEM → C-VISUALIZARCOLEC: adicionarItem(dadosItem, id_colecao)
+ * - Passo 4: FRM-ADDITEM → C-COLECOES: adicionarItem(dadosItem, id_colecao)
  * - Passo 8: Retorna item adicionado
  * 
  * @param {object} itemData - Objeto com os dados do item e collectionId
@@ -159,10 +159,10 @@ export const updateItem = async (itemId, itemData) => {
 /**
  * Remove um item do sistema.
  * Conforme diagrama SD06, este método corresponde a removerItem(id_item, id_colecao)
- * chamado pelo controller C-VISUALIZARCOLEC.
+ * chamado pelo controller C-COLECOES.
  * 
  * Fluxo:
- * - Passo 3: FRM-REMOVERITEM → C-VISUALIZARCOLEC: removerItem(id_item, id_colecao)
+ * - Passo 3: FRM-REMOVERITEM → C-COLECOES: removerItem(id_item, id_colecao)
  * - Passo 8: Retorna confirmação de remoção
  * 
  * @param {number} itemId - ID do item a ser removido

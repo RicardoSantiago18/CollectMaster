@@ -312,9 +312,9 @@ const LoginView = ({
  * 
  * Fluxo conforme diagrama SD02:
  * 1. Colecionador → FRM-REALIZARLOGIN: insereEmailESenha()
- * 2. FRM-REALIZARLOGIN → C-VISUALIZARCOLEC: loginUser(email, senha)
- * 3. C-VISUALIZARCOLEC → E-COLECIONADOR: get_user_by_email(email)
- * 4. E-COLECIONADOR → C-VISUALIZARCOLEC: retorna UserInDB
+ * 2. FRM-REALIZARLOGIN → C-REALIZARLOGIN: loginUser(email, senha)
+ * 3. C-REALIZARLOGIN → E-COLECIONADOR: get_user_by_email(email)
+ * 4. E-COLECIONADOR → C-REALIZARLOGIN: retorna UserInDB
  * 5-7. Se senha inválida: 401 Unauthorized → Exibe erro
  * 8-10. Se senha válida: 200 OK → Retorna dados → Salva no localStorage
  */

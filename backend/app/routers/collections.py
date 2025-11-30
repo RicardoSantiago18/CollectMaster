@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status
 from typing import List
 from .. import schemas, db_json
-from ..controllers.login import CVisualizarColec
+from ..controllers.colecoes import CColecoes
 
 router = APIRouter()
 
@@ -9,11 +9,11 @@ router = APIRouter()
 async def create_new_collection(collection_data: schemas.CollectionCreate):
     """
     Endpoint HTTP para criação de coleção.
-    Recebe requisição HTTP POST e chama o controller C-VISUALIZARCOLEC.
+    Recebe requisição HTTP POST e chama o controller C-COLECOES.
     Conforme diagrama SD04.
     """
-    # Passo 5: FRM-CRIARCOLEC → C-VISUALIZARCOLEC: createCollection(dados)
-    collection_public = CVisualizarColec.createCollection(dados=collection_data)
+    # Passo 5: FRM-CRIARCOLEC → C-COLECOES: createCollection(dados)
+    collection_public = CColecoes.createCollection(dados=collection_data)
     
     return collection_public
 

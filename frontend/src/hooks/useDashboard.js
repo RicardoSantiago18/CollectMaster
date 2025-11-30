@@ -149,13 +149,13 @@ export const useDashboard = () => {
         }
     } else {
         // MODO CRIAÇÃO: cria nova coleção
-        // Passo 3.1: FRM-CRIARCOLEC → C-VISUALIZARCOLEC: createCollection(dados)
+        // Passo 3.1: FRM-CRIARCOLEC → C-COLECOES: createCollection(dados)
         result = await createCollection({
             ...formData,
             ownerId: user.id
         });
         if (result) {
-            // Passo 8: C-VISUALIZARCOLEC retorna nova coleção
+            // Passo 8: C-COLECOES retorna nova coleção
             // Passo 3.2: FRM-CRIARCOLEC fecha o modal
             fecharModal();
             // Passo 4: FRM-CRIARCOLEC atualiza coleções

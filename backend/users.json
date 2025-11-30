@@ -11,7 +11,7 @@
     "id": 2,
     "name": "Ana Clara",
     "email": "ana@collectmaster.com",
-    "hashed_password": "$2b$12$LoyVC0DjbMksYYRe3OU7dusumxpPegM/vjyN9pboH2GQ/bx3juyD.",
+    "hashed_password": "$2b$12$rqeCIX.9J2m7HJw8L7reZeZHU8eXLdPM6I9UkrF6o0oaXRko0DAlK",
     "bio": null,
     "reset_token": null
   },

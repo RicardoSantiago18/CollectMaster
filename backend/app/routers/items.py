@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status
 from typing import List
 from .. import schemas, db_json
-from ..controllers.login import CVisualizarColec
+from ..controllers.colecoes import CColecoes
 
 router = APIRouter()
 
@@ -9,11 +9,11 @@ router = APIRouter()
 async def create_new_item(item_data: schemas.ItemCreate):
     """
     Endpoint HTTP para criação de item.
-    Recebe requisição HTTP POST e chama o controller C-VISUALIZARCOLEC.
+    Recebe requisição HTTP POST e chama o controller C-COLECOES.
     Conforme diagrama SD05.
     """
-    # Passo 4: FRM-ADDITEM → C-VISUALIZARCOLEC: adicionarItem(dadosItem, id_colecao)
-    item_public = CVisualizarColec.adicionarItem(
+    # Passo 4: FRM-ADDITEM → C-COLECOES: adicionarItem(dadosItem, id_colecao)
+    item_public = CColecoes.adicionarItem(
         dados_item=item_data,
         id_colecao=item_data.collection_id
     )
@@ -35,7 +35,7 @@ async def update_item(item_id: int, item_update: schemas.ItemUpdate):
 async def delete_item(item_id: int):
     """
     Endpoint HTTP para remoção de item.
-    Recebe requisição HTTP DELETE e chama o controller C-VISUALIZARCOLEC.
+    Recebe requisição HTTP DELETE e chama o controller C-COLECOES.
     Conforme diagrama SD06.
     
     Nota: O collection_id é obtido do próprio item antes de removê-lo.
@@ -48,8 +48,8 @@ async def delete_item(item_id: int):
     
     collection_id = item.collection_id
     
-    # Passo 3: FRM-REMOVERITEM → C-VISUALIZARCOLEC: removerItem(id_item, id_colecao)
-    success = CVisualizarColec.removerItem(id_item=item_id, id_colecao=collection_id)
+    # Passo 3: FRM-REMOVERITEM → C-COLECOES: removerItem(id_item, id_colecao)
+    success = CColecoes.removerItem(id_item=item_id, id_colecao=collection_id)
     
     if not success:
         raise HTTPException(status_code=404, detail="Item não encontrado")
