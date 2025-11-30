@@ -16,8 +16,8 @@ frontend/pnpm-debug.log*
 # --- BACKEND (Python/FastAPI) ---
 backend/venv/
 backend/vevn/
-backend/__pycache__/
-backend/*.py[cod]
-backend/*.so
+backend/**/__pycache__/
+backend/**/*.py[cod]
+backend/**/*.so
 backend/.env
 backend/.pytest_cache/

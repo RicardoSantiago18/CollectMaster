@@ -1,6 +1,4 @@
 """
-Controller C-VISUALIZARCOLEC
-Responsável pela lógica de controle dos casos de uso de login, criação de coleções, adição e remoção de itens.
 Implementa métodos conforme diagramas SD02, SD04, SD05 e SD06.
 """
 from fastapi import HTTPException, status
