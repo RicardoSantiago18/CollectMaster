@@ -155,4 +155,21 @@ class EColecionador:
             email=user.email,
             bio=user.bio
         )
+    
+    @staticmethod
+    def buscarEmail(email: str) -> Optional[schemas.UserInDB]:
+        """
+        Busca um usuário (colecionador) pelo email.
+        
+        Conforme diagrama SD08, este método é responsável por:
+        - Buscar o usuário no banco de dados pelo email
+        - Retornar os dados do usuário (UserInDB)
+        
+        Args:
+            email: Email do colecionador a ser buscado
+            
+        Returns:
+            UserInDB: Objeto do usuário encontrado, ou None se não existir
+        """
+        return db_json.get_user_by_email(email=email)
 

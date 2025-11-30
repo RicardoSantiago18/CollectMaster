@@ -18,6 +18,7 @@ class UserInDB(BaseModel):
     email: EmailStr
     hashed_password: str
     bio: Optional[str] = None
+    reset_token: Optional[str] = None
 
 class UserPublic(BaseModel):
     id: int
@@ -32,6 +33,13 @@ class LoginRequest(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str
+
+class PasswordResetRequest(BaseModel):
+    email: EmailStr
+
+class PasswordResetConfirm(BaseModel):
+    token: str
+    new_password: str
 
 # --- NOVOS Schemas de Coleção ---
 class CollectionBase(BaseModel):

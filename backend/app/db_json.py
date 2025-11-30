@@ -189,3 +189,42 @@ def update_user_in_db(user_id: int, user_update: UserUpdate) -> Optional[UserInD
             return updated_user
             
     return None
+
+def get_user_by_reset_token(token: str) -> Optional[UserInDB]:
+    """Busca um usuário pelo token de reset de senha."""
+    users = load_users()
+    for user in users:
+        if user.reset_token == token:
+            return user
+    return None
+
+def update_user_reset_token(email: str, token: Optional[str]) -> Optional[UserInDB]:
+    """Atualiza o token de reset de senha de um usuário."""
+    users = load_users()
+    
+    for i, user in enumerate(users):
+        if user.email == email:
+            # Atualiza o token de reset
+            updated_user = user.model_copy(update={"reset_token": token})
+            users[i] = updated_user
+            save_users(users)
+            return updated_user
+            
+    return None
+
+def update_user_password(user_id: int, new_hashed_password: str) -> Optional[UserInDB]:
+    """Atualiza a senha de um usuário e remove o token de reset."""
+    users = load_users()
+    
+    for i, user in enumerate(users):
+        if user.id == user_id:
+            # Atualiza a senha e remove o token
+            updated_user = user.model_copy(update={
+                "hashed_password": new_hashed_password,
+                "reset_token": None
+            })
+            users[i] = updated_user
+            save_users(users)
+            return updated_user
+            
+    return None

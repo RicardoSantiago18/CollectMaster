@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from .. import schemas, security, db_json
 from ..controllers.cadastro import CCadastro
 from ..controllers.login import CVisualizarColec
+from ..controllers.recuperar_senha import CRecuperarSenha
 
 router = APIRouter()
 
@@ -34,3 +35,25 @@ async def login_user(form_data: schemas.LoginRequest):
     )
     
     return user_public
+
+@router.post("/forgot-password", status_code=status.HTTP_200_OK)
+async def forgot_password(request: schemas.PasswordResetRequest):
+    """
+    Endpoint HTTP para solicitar recuperação de senha.
+    Recebe requisição HTTP e chama o controller C-RECUPERARSENHA.
+    Conforme diagrama SD08, passo 4.1.
+    """
+    result = CRecuperarSenha.solicitarRecuperacao(email=request.email)
+    return result
+
+@router.post("/reset-password", status_code=status.HTTP_200_OK)
+async def reset_password(request: schemas.PasswordResetConfirm):
+    """
+    Endpoint HTTP para confirmar recuperação de senha.
+    Recebe requisição HTTP e chama o controller C-RECUPERARSENHA.
+    """
+    result = CRecuperarSenha.confirmar_recuperacao(
+        token=request.token,
+        nova_senha=request.new_password
+    )
+    return result

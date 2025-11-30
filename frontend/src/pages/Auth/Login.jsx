@@ -236,7 +236,8 @@ const LoginView = ({
             </Box>
             
             <Link
-                href="#"
+                component={RouterLink}
+                to="/forgot-password"
                 variant="body2"
                 sx={{
                   display: 'block',
