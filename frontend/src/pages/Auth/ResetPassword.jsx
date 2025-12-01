@@ -21,10 +21,7 @@ import {
 import { Link as RouterLink, useNavigate, useSearchParams } from 'react-router-dom';
 import { resetPassword } from '../../services/authService';
 
-/**
- * Página de redefinição de senha.
- * Permite ao usuário definir uma nova senha usando o token recebido por email.
- */
+
 const ResetPassword = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();

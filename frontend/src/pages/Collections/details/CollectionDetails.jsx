@@ -13,15 +13,6 @@ import CollectionDetailsHeader from './CollectionDetailsHeader';
 import CollectionItemsGrid from './CollectionItemsGrid';
 import { useCollectionDetails } from '../../../hooks/useCollectionDetails';
 
-/**
- * FRM-ADDITEM / FRM-REMOVERITEM - Formulário/Tela/Modal de Gerenciamento de Itens
- * Conforme diagramas SD05 - ADICIONAR ITEM e SD06 - REMOVER ITEM
- * 
- * Este componente representa a interface de gerenciamento de itens.
- * Permite ao colecionador adicionar e remover itens de uma coleção.
- */
-// Componente da página de detalhes de uma coleção (FRM-ADDITEM / FRM-REMOVERITEM)
-// Exibe informações da coleção e permite gerenciar seus itens
 const CollectionDetails = () => {
   const navigate = useNavigate();
   
@@ -33,12 +24,11 @@ const CollectionDetails = () => {
     loading,
     openItemModal,
     newItemData,
-    editingItem, // Estado que indica qual item está sendo editado
+    editingItem,
     handleOpenItemModal,
     handleCloseItemModal,
     handleInputChange,
     handleSubmitItem,
-    // Funções para editar e excluir itens
     handleEditItem,
     handleDeleteItem
   } = useCollectionDetails();
@@ -90,11 +80,10 @@ const CollectionDetails = () => {
           </Button>
         </Box>
 
-        {/* AQUI ESTÁ A MÁGICA: Passamos as funções reais para o Grid */}
         <CollectionItemsGrid
           items={items}
-          onEdit={handleEditItem}     // <--- Conectado!
-          onDelete={handleDeleteItem} // <--- Conectado!
+          onEdit={handleEditItem} 
+          onDelete={handleDeleteItem} 
         />
       </Container>
 

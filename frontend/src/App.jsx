@@ -11,8 +11,8 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import Social from './pages/Social/Social';
 import ProfilePage from './pages/Profile/ProfilePage';
 import CollectionDetails from './pages/Collections/details/CollectionDetails';
-import SocialUserCollectionsPage from './pages/Social/pages/SocialUserCollectionsPage';
-import SocialUserCollectionDetailsPage from './pages/Social/pages/SocialUserCollectionDetailsPage';
+import SocialUserCollectionsPage from './pages/Social/SocialUserCollectionsPage';
+import SocialUserCollectionDetailsPage from './pages/Social/SocialUserCollectionDetailsPage';
 import Header from './components/Header/Header';
 
 // Configura o tema visual da aplicação com cores personalizadas

@@ -6,8 +6,8 @@
     "owner_id": 2,
     "image_url": "https://blog.caravelascolecoes.com.br/wp-content/uploads/2019/03/moedas-do-imperio-para-capa.png",
     "id": 1,
-    "value": 1550.0,
-    "itemCount": 4
+    "value": 1700.0,
+    "itemCount": 5
   },
   {
     "name": "Vinis de Jazz",
@@ -86,7 +86,7 @@
     "owner_id": 8,
     "image_url": "https://via.placeholder.com/300x200/4F518C/FFFFFF?text=Cole\u00e7\u00e3o",
     "id": 9,
-    "value": 0,
+    "value": 0.0,
     "itemCount": 0
   }
 ]

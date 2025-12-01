@@ -1,0 +1,68 @@
+import { useState, useEffect, useMemo } from 'react';
+import { getAllUsers, searchUsers } from '../services/userService';
+
+/**
+ * Hook customizado que gerencia a lógica de busca e listagem de usuários para a página Social.
+ * Extrai toda a lógica de estado, debounce e fetch de dados do componente SocialUserList.
+ */
+export const useSocialUserList = (searchQuery = '') => {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
+
+  // Debounce do searchQuery (300ms)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  // Buscar usuários
+  useEffect(() => {
+    const fetchUsers = async () => {
+      setLoading(true);
+      try {
+        let allUsers;
+        
+        if (debouncedSearchQuery.trim()) {
+          // Buscar com filtro
+          allUsers = await searchUsers(debouncedSearchQuery);
+        } else {
+          // Buscar todos
+          allUsers = await getAllUsers();
+        }
+        
+        setUsers(allUsers || []);
+      } catch (error) {
+        console.error('Erro ao buscar usuários:', error);
+        setUsers([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, [debouncedSearchQuery]);
+
+  // Filtrar usuários localmente (fallback simples)
+  const filteredUsers = useMemo(() => {
+    if (!debouncedSearchQuery.trim()) {
+      return users;
+    }
+
+    const query = debouncedSearchQuery.toLowerCase().trim();
+    return users.filter((user) => {
+      const name = (user.name || '').toLowerCase();
+      return name.includes(query);
+    });
+  }, [users, debouncedSearchQuery]);
+
+  return {
+    users: filteredUsers,
+    loading,
+    searchQuery: debouncedSearchQuery,
+  };
+};
+

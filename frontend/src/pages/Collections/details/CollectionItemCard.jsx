@@ -12,21 +12,20 @@ import {
   Edit as EditIcon,
   Delete as DeleteIcon,
   Image as ImageIcon,
+  Visibility as ViewIcon,
 } from '@mui/icons-material';
 
 const CollectionItemCard = ({
   item,
   onEdit,
   onDelete,
+  readOnly = false,
+  onViewDetails = null,
 }) => {
   
-  // --- CORREÇÃO DE DADOS ---
-  // O Backend manda 'estimated_value' e 'image_url'
-  // O Frontend antigo usava 'estimatedValue' e 'image'
-  // Aqui normalizamos para usar o que estiver disponível
+
   const displayValue = item.estimated_value ?? item.estimatedValue ?? 0;
   const displayImage = item.image_url ?? item.image;
-  // -------------------------
 
   return (
     <Card
@@ -63,7 +62,7 @@ const CollectionItemCard = ({
         {displayImage ? (
           <CardMedia
             component="img"
-            image={displayImage} // Usando a variável normalizada
+            image={displayImage}
             alt={item.name}
             sx={{
               width: '100%',
@@ -209,42 +208,65 @@ const CollectionItemCard = ({
           bgcolor: 'rgba(47, 79, 79, 0.05)',
         }}
       >
-        <Button
-          startIcon={<EditIcon />}
-          variant="outlined"
-          size="small"
-          fullWidth
-          onClick={() => onEdit?.(item)}
-          sx={{
-            fontSize: '0.85rem',
-            borderColor: '#2F4F4F',
-            color: '#2F4F4F',
-            '&:hover': {
-              borderColor: '#D4AF37',
-              bgcolor: 'rgba(212, 175, 55, 0.1)',
-            },
-          }}
-        >
-          Editar
-        </Button>
-        <Button
-          startIcon={<DeleteIcon />}
-          variant="outlined"
-          size="small"
-          fullWidth
-          onClick={() => onDelete?.(item)}
-          sx={{
-            fontSize: '0.85rem',
-            borderColor: '#d32f2f',
-            color: '#d32f2f',
-            '&:hover': {
-              borderColor: '#c62828',
-              bgcolor: 'rgba(211, 47, 47, 0.1)',
-            },
-          }}
-        >
-          Excluir
-        </Button>
+        {readOnly ? (
+          <Button
+            startIcon={<ViewIcon />}
+            variant="contained"
+            size="small"
+            fullWidth
+            onClick={() => onViewDetails?.(item)}
+            sx={{
+              bgcolor: '#D4AF37',
+              color: '#2F4F4F',
+              fontWeight: 'bold',
+              fontSize: '0.85rem',
+              '&:hover': {
+                bgcolor: '#e5c55a',
+              },
+            }}
+          >
+            Ver Detalhes
+          </Button>
+        ) : (
+          <>
+            <Button
+              startIcon={<EditIcon />}
+              variant="outlined"
+              size="small"
+              fullWidth
+              onClick={() => onEdit?.(item)}
+              sx={{
+                fontSize: '0.85rem',
+                borderColor: '#2F4F4F',
+                color: '#2F4F4F',
+                '&:hover': {
+                  borderColor: '#D4AF37',
+                  bgcolor: 'rgba(212, 175, 55, 0.1)',
+                },
+              }}
+            >
+              Editar
+            </Button>
+            <Button
+              startIcon={<DeleteIcon />}
+              variant="outlined"
+              size="small"
+              fullWidth
+              onClick={() => onDelete?.(item)}
+              sx={{
+                fontSize: '0.85rem',
+                borderColor: '#d32f2f',
+                color: '#d32f2f',
+                '&:hover': {
+                  borderColor: '#c62828',
+                  bgcolor: 'rgba(211, 47, 47, 0.1)',
+                },
+              }}
+            >
+              Excluir
+            </Button>
+          </>
+        )}
       </CardActions>
     </Card>
   );

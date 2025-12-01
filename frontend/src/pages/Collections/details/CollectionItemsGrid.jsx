@@ -6,6 +6,8 @@ const CollectionItemsGrid = ({
   items,
   onEdit,
   onDelete,
+  readOnly = false,
+  onViewDetails = null,
 }) => {
   if (items.length === 0) {
     return (
@@ -58,6 +60,8 @@ const CollectionItemsGrid = ({
             item={item}
             onEdit={onEdit}
             onDelete={onDelete}
+            readOnly={readOnly}
+            onViewDetails={onViewDetails}
           />
         </Grid>
       ))}

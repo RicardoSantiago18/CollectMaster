@@ -8,9 +8,9 @@ import {
 import {
   ArrowBack as ArrowBackIcon,
 } from '@mui/icons-material';
-import { useSocialCollectionDetails } from '../../../hooks/useSocialCollectionDetails';
-import CollectionDetailsHeader from '../../Collections/details/CollectionDetailsHeader';
-import CollectionItemsGrid from '../../Collections/details/CollectionItemsGrid';
+import { useSocialCollectionDetails } from '../../hooks/useSocialCollectionDetails';
+import CollectionDetailsHeader from '../Collections/details/CollectionDetailsHeader';
+import CollectionItemsGrid from '../Collections/details/CollectionItemsGrid';
 
 const SocialUserCollectionDetailsPage = () => {
   const { userId, collectionId } = useParams();

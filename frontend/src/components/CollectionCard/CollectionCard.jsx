@@ -18,14 +18,19 @@ import {
 import { useNavigate } from 'react-router-dom'
 
 // Componente que exibe um card de coleção
-function CollectionCard({ collection, onEdit, onDelete }) {
+function CollectionCard({ collection, onEdit, onDelete, readOnly = false, userId = null }) {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const navigate = useNavigate()
 
   // Navega para a página de detalhes da coleção
+  // Se readOnly for true e userId fornecido, redireciona para rota pública
   const handleViewDetails = () => {
-    navigate(`/collections/${collection.id}`)
+    if (readOnly && userId) {
+      navigate(`/social/user/${userId}/collection/${collection.id}`)
+    } else {
+      navigate(`/collections/${collection.id}`)
+    }
   }
 
   const displayImage = collection.image_url || collection.image || `https://via.placeholder.com/300x200/2F4F4F/F5F5DC?text=${encodeURIComponent(collection.name)}`;
@@ -159,7 +164,7 @@ function CollectionCard({ collection, onEdit, onDelete }) {
         p: 2,
         gap: 1,
         bgcolor: 'rgba(47, 79, 79, 0.05)',
-        flexDirection: 'column',
+        flexDirection: readOnly ? 'row' : 'column',
         flexShrink: 0
       }}>
         <Button 
@@ -178,38 +183,40 @@ function CollectionCard({ collection, onEdit, onDelete }) {
         >
           Ver Detalhes
         </Button>
-        <Box sx={{ display: 'flex', gap: 1, width: '100%' }}>
-          <Button 
-            startIcon={<EditIcon />} 
-            variant="outlined" 
-            size="small"
-            fullWidth
-            onClick={() => onEdit && onEdit(collection)}
-            sx={{ 
-              fontSize: '0.85rem',
-              borderColor: '#2F4F4F',
-              color: '#2F4F4F',
-              '&:hover': { borderColor: '#D4AF37', bgcolor: 'rgba(212, 175, 55, 0.1)' }
-            }}
-          >
-            Editar
-          </Button>
-          <Button 
-            startIcon={<DeleteIcon />} 
-            variant="outlined" 
-            size="small"
-            fullWidth
-            onClick={() => onDelete && onDelete(collection)}
-            sx={{ 
-              fontSize: '0.85rem',
-              borderColor: '#d32f2f',
-              color: '#d32f2f',
-              '&:hover': { borderColor: '#c62828', bgcolor: 'rgba(211, 47, 47, 0.1)' }
-            }}
-          >
-            Excluir
-          </Button>
-        </Box>
+        {!readOnly && (
+          <Box sx={{ display: 'flex', gap: 1, width: '100%' }}>
+            <Button 
+              startIcon={<EditIcon />} 
+              variant="outlined" 
+              size="small"
+              fullWidth
+              onClick={() => onEdit && onEdit(collection)}
+              sx={{ 
+                fontSize: '0.85rem',
+                borderColor: '#2F4F4F',
+                color: '#2F4F4F',
+                '&:hover': { borderColor: '#D4AF37', bgcolor: 'rgba(212, 175, 55, 0.1)' }
+              }}
+            >
+              Editar
+            </Button>
+            <Button 
+              startIcon={<DeleteIcon />} 
+              variant="outlined" 
+              size="small"
+              fullWidth
+              onClick={() => onDelete && onDelete(collection)}
+              sx={{ 
+                fontSize: '0.85rem',
+                borderColor: '#d32f2f',
+                color: '#d32f2f',
+                '&:hover': { borderColor: '#c62828', bgcolor: 'rgba(211, 47, 47, 0.1)' }
+              }}
+            >
+              Excluir
+            </Button>
+          </Box>
+        )}
       </CardActions>
     </Card>
   )

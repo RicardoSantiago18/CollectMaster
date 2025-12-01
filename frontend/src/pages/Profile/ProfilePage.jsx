@@ -1,10 +1,3 @@
-/**
- * FRM-EDITARPERFIL - Formulário/Tela de Edição de Perfil
- * Conforme diagrama SD03 - EDITAR PERFIL
- * 
- * Este componente representa a interface de edição de perfil (FRM-EDITARPERFIL).
- * Permite ao colecionador alterar nome, email ou bio e salvar as alterações.
- */
 import React, { useState, useEffect } from 'react';
 import {
   Typography, Avatar, Box,
@@ -40,10 +33,6 @@ const ProfilePage = () => {
 
   /**
    * Método que corresponde a "Altera nome, email ou bio()" do diagrama SD03.
-   * Passo 1: Colecionador altera os campos do perfil na interface.
-   * 
-   * @param {string} field - Campo a ser alterado (name, email, bio)
-   * @returns {Function} Função que atualiza o campo no estado
    */
   const alteraNomeEmailOuBio = (field) => (e) => {
     setFormData({ ...formData, [field]: e.target.value });
@@ -51,17 +40,11 @@ const ProfilePage = () => {
 
   /**
    * Método que corresponde a "clica em Salvar Alterações()" do diagrama SD03.
-   * Passo 2: Colecionador dispara a ação de salvar.
-   * 
-   * Passo 2.1: Chama updateUser(id, dados)
-   * Passo 5.1: Atualiza estado local
-   * Passo 5.1.1: atualizaLocalStorage(user)
-   * Passo 5.1.1.1: Exibe "Perfil Atualizado!!"
    */
   const clicaEmSalvarAlteracoes = async () => {
     if (!user) return;
 
-    // Passo 2.1: FRM-EDITARPERFIL → C-EDITARPERFIL: updateUser(id, dados)
+
     const result = await updateUser(user.id, {
       name: formData.name,
       email: formData.email,
@@ -69,30 +52,25 @@ const ProfilePage = () => {
     });
 
     if (result.success) {
-      // Passo 5.1: Atualiza estado local
       setFormData({
         name: result.data.name || '',
         email: result.data.email || '',
         bio: result.data.bio || ''
       });
       
-      // Passo 5.1.1: atualizaLocalStorage(user)
       const currentUser = JSON.parse(localStorage.getItem('user'));
       const newUser = { ...currentUser, ...result.data };
       localStorage.setItem('user', JSON.stringify(newUser));
       
-      // Passo 5.1.1.1: Exibe "Perfil Atualizado!!"
+
       setFeedback({ open: true, message: 'Perfil Atualizado!!', type: 'success' });
     } else {
-      // Exibe erro se houver falha
       setFeedback({ open: true, message: result.error || 'Erro ao atualizar perfil.', type: 'error' });
     }
   };
 
-  // Mantém handleInputChange para compatibilidade
   const handleInputChange = alteraNomeEmailOuBio;
   
-  // Mantém handleSave para compatibilidade
   const handleSave = clicaEmSalvarAlteracoes;
 
   const handleCloseFeedback = () => setFeedback({ ...feedback, open: false });

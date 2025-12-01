@@ -18,19 +18,7 @@ import {
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useForgotPassword } from '../../hooks/useForgotPassword';
 
-/**
- * FRM-ESQUECERSENHA - Formulário/Tela de Recuperação de Senha
- * Conforme diagrama SD08 - ESQUECER SENHA
- * 
- * Este componente representa a interface de recuperação de senha (FRM-ESQUECERSENHA).
- * Conforme diagrama:
- * - Passo 1: Colecionador → FRM-REALIZARLOGIN: abrirRecuperacao()
- * - Passo 2: FRM-REALIZARLOGIN → FRM-ESQUECERSENHA: abrirJanela()
- * - Passo 3: Colecionador → FRM-ESQUECERSENHA: preencherEmail(email)
- * - Passo 4: Colecionador → FRM-ESQUECERSENHA: enviar()
- * - Passo 4.1: FRM-ESQUECERSENHA → C-RECUPERARSENHA: solicitarRecuperacao(email)
- * - Passo 5.2.1: FRM-ESQUECERSENHA → Colecionador: exibirMsg("Verifique seu email")
- */
+
 const ForgotPasswordView = ({
   formData,
   errors,
@@ -251,20 +239,7 @@ const ForgotPasswordView = ({
   );
 };
 
-/**
- * Componente principal de Recuperação de Senha (FRM-ESQUECERSENHA)
- * Conecta a lógica do hook useForgotPassword com a visualização ForgotPasswordView.
- * 
- * Fluxo conforme diagrama SD08:
- * 1. Colecionador → FRM-REALIZARLOGIN: abrirRecuperacao()
- * 2. FRM-REALIZARLOGIN → FRM-ESQUECERSENHA: abrirJanela()
- * 3. Colecionador → FRM-ESQUECERSENHA: preencherEmail(email)
- * 4. Colecionador → FRM-ESQUECERSENHA: enviar()
- * 4.1. FRM-ESQUECERSENHA → C-RECUPERARSENHA: solicitarRecuperacao(email)
- * 4.1.1. C-RECUPERARSENHA → E-COLECIONADOR: buscarEmail(email)
- * Alt: [email não existe] → erro("email não encontrado") → exibirMsg("email não encontrado")
- * Alt: [email existe] → gerarToken() → enviarToken() → sucesso() → exibirMsg("Verifique seu email")
- */
+
 const ForgotPassword = () => {
   const logic = useForgotPassword();
   

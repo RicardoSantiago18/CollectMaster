@@ -23,10 +23,8 @@ import {
 import { Link as RouterLink } from 'react-router-dom'
 
 // Componente da página inicial (Home)
-// Exibe informações sobre a plataforma, recursos e tipos de coleções populares
 const Home = () => {
   const theme = useTheme()
-  // Verifica se está em dispositivo móvel para ajustar o layout
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
   const features = [

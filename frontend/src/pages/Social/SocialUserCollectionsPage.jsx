@@ -10,8 +10,8 @@ import {
 import {
   ArrowBack as ArrowBackIcon,
 } from '@mui/icons-material';
-import { useSocialProfile } from '../../../hooks/useSocialProfile';
-import CollectionCard from '../../../components/CollectionCard/CollectionCard';
+import { useSocialProfile } from '../../hooks/useSocialProfile';
+import CollectionCard from '../../components/CollectionCard/CollectionCard';
 
 
 const SocialUserCollectionsPage = () => {
