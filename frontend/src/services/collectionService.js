@@ -15,7 +15,9 @@ export const getCollections = async (userId) => {
   }
 };
 
-
+/**
+ * Cria uma nova coleção no sistema.
+ */
 export const createCollection = async (collectionData) => {
   try {
     const response = await fetch(`${API_URL}/collections/`, {
@@ -30,6 +32,7 @@ export const createCollection = async (collectionData) => {
       }),
     });
 
+    // Passo 8: Retorna nova coleção
     if (response.ok) {
       return await response.json();
     }
@@ -81,8 +84,9 @@ export const getCollectionItems = async (collectionId) => {
   }
 };
 
-
-
+/**
+ * Cria um novo item em uma coleção.
+ */
 export const createItem = async (itemData) => {
   try {
     const response = await fetch(`${API_URL}/items/`, {
@@ -134,6 +138,9 @@ export const updateItem = async (itemId, itemData) => {
 };
 
 
+/**
+ * Remove um item do sistema.
+ */
 export const deleteItem = async (itemId) => {
   try {
     const response = await fetch(`${API_URL}/items/${itemId}`, {
@@ -147,6 +154,7 @@ export const deleteItem = async (itemId) => {
   }
 };
 
+
 // Exclui uma coleção do sistema
 export const deleteCollection = async (id) => {
   try {
@@ -159,4 +167,3 @@ export const deleteCollection = async (id) => {
     return false;
   }
 };
-

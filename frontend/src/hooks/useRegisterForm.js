@@ -4,15 +4,6 @@ import { criarUsuario } from '../api/auth';
 
 /**
  * Hook customizado que gerencia toda a lógica do formulário de registro.
- * Implementa o fluxo conforme diagrama SD01 - REALIZAR CADASTRO.
- * 
- * Conforme diagrama:
- * - FRM-CADASTRO: Componente Register.jsx (interface)
- * - infoCadastro(): Método que recebe dados do colecionador
- * - criarUsuario(): Chama o serviço que comunica com C-CADASTRO
- * - confirmaçãoCadastro: Retorna confirmação ao colecionador
- * 
- * Retorna estados e funções para controlar o formulário e criação de conta.
  */
 export const useRegisterForm = () => {
   const navigate = useNavigate();
@@ -34,7 +25,6 @@ export const useRegisterForm = () => {
       ...formData,
       [e.target.name]: e.target.value,
     });
-    // Limpa erro do campo
     if (errors[e.target.name]) {
       setErrors({
         ...errors,
@@ -45,9 +35,6 @@ export const useRegisterForm = () => {
 
   /**
    * Valida todos os campos do formulário de registro.
-   * Verifica nome, email, senha e confirmação de senha.
-   * 
-   * @returns {boolean} true se todos os campos são válidos, false caso contrário
    */
   const validateForm = () => {
     const newErrors = {};
@@ -80,24 +67,11 @@ export const useRegisterForm = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  /**
-   * Método infoCadastro() conforme diagrama SD01.
-   * Passo 1: Recebe dados do colecionador (nome, email, senha).
-   * Passo 2: Chama criarUsuario() que comunica com C-CADASTRO.
-   * Passo 6: Retorna confirmaçãoCadastro ao colecionador.
-   * 
-   * @param {string} nome - Nome completo do colecionador
-   * @param {string} email - Email do colecionador
-   * @param {string} senha - Senha do colecionador
-   * @returns {Promise<{success: boolean, data?: object, error?: string}>}
-   */
+
   const infoCadastro = async (nome, email, senha) => {
-    // Passo 2 do diagrama: chama criarUsuario (que comunica com C-CADASTRO)
     const result = await criarUsuario(nome, email, senha);
 
     if (result.success) {
-      // Passo 6 do diagrama: confirmaçãoCadastro
-      // Redireciona para login com mensagem de sucesso
       navigate('/login', { 
         state: { message: 'Cadastro realizado com sucesso! Faça login para continuar.' }
       });
@@ -110,19 +84,14 @@ export const useRegisterForm = () => {
 
   /**
    * Processa o envio do formulário de registro.
-   * Valida os campos e chama infoCadastro().
-   * 
-   * @param {Event} e - Evento de submit do formulário
    */
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Validação antes de enviar
+
     if (!validateForm()) {
       return;
     }
 
-    // Chama infoCadastro conforme diagrama SD01
     await infoCadastro(
       formData.name,
       formData.email,
@@ -130,7 +99,7 @@ export const useRegisterForm = () => {
     );
   };
 
-  // Exporta tudo que o componente visual precisa
+  
   return {
     formData,
     errors,

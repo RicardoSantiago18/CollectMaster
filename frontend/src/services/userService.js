@@ -28,7 +28,9 @@ export const getUserById = async (userId) => {
   }
 };
 
-
+/**
+ * Carrega dados completos do perfil de outro colecionador.
+ */
 export const carregarDadosPerfil = async (userId) => {
   try {
     const response = await fetch(`${API_URL}/users/${userId}/profile`);
@@ -58,7 +60,9 @@ export const searchUsers = async (searchQuery) => {
   }
 };
 
-
+/**
+ * Atualiza um usuário no sistema.
+ */
 export const updateUser = async (userId, userData) => {
   try {
     const response = await fetch(`${API_URL}/users/${userId}`, {
@@ -85,4 +89,3 @@ export const updateUser = async (userId, userData) => {
     return { success: false, error: 'Erro de conexão. Tente novamente.' };
   }
 };
-

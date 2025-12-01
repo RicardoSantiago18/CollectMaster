@@ -3,14 +3,12 @@ import { getAllUsers, searchUsers } from '../api/users';
 
 /**
  * Hook customizado que gerencia a lógica de busca e listagem de usuários para a página Social.
- * Extrai toda a lógica de estado, debounce e fetch de dados do componente SocialUserList.
  */
 export const useSocialUserList = (searchQuery = '') => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
 
-  // Debounce do searchQuery (300ms)
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearchQuery(searchQuery);
@@ -27,10 +25,8 @@ export const useSocialUserList = (searchQuery = '') => {
         let allUsers;
         
         if (debouncedSearchQuery.trim()) {
-          // Buscar com filtro
           allUsers = await searchUsers(debouncedSearchQuery);
         } else {
-          // Buscar todos
           allUsers = await getAllUsers();
         }
         
@@ -46,7 +42,7 @@ export const useSocialUserList = (searchQuery = '') => {
     fetchUsers();
   }, [debouncedSearchQuery]);
 
-  // Filtrar usuários localmente (fallback simples)
+
   const filteredUsers = useMemo(() => {
     if (!debouncedSearchQuery.trim()) {
       return users;

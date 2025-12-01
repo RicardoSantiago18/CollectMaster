@@ -24,6 +24,7 @@ export const criarUsuario = async (nome, email, senha) => {
   }
 };
 
+// Mantém registerUser para compatibilidade (deprecated)
 export const registerUser = criarUsuario;
 
 
@@ -108,4 +109,3 @@ export const resetPassword = async (token, password) => {
     return { success: false, error: 'Erro de conexão. Tente novamente.' };
   }
 };
-
