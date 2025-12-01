@@ -9,9 +9,7 @@ import {
 } from '../services/collectionService';
 
 /**
- * Hook customizado que gerencia toda a lógica da página de detalhes de uma coleção.
  * Implementa o fluxo conforme diagrama SD05 - ADICIONAR ITEM.
- * 
  * Conforme diagrama:
  * - FRM-ADDITEM: Componente CollectionDetails.jsx (interface)
  * - infoItem(): Método que recebe dados do item
@@ -28,9 +26,9 @@ export const useCollectionDetails = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   
-  // Estados do Modal
+
   const [openItemModal, setOpenItemModal] = useState(false);
-  const [editingItem, setEditingItem] = useState(null); // Guarda o item sendo editado
+  const [editingItem, setEditingItem] = useState(null);
   const [newItemData, setNewItemData] = useState({
     name: '',
     description: '',
@@ -100,8 +98,6 @@ export const useCollectionDetails = () => {
   /**
    * Método abrirModal() conforme diagrama SD05.
    * Passo 1.1: A interface de adição de item abre o modal de cadastro.
-   * 
-   * @returns {void}
    */
   const abrirModal = () => {
     setEditingItem(null); 
@@ -115,7 +111,6 @@ export const useCollectionDetails = () => {
     setOpenItemModal(true);
   };
 
-  // Mantém handleOpenItemModal para compatibilidade
   const handleOpenItemModal = abrirModal;
 
   // Abre o modal preenchido com os dados do item para edição
@@ -284,12 +279,12 @@ export const useCollectionDetails = () => {
     loading,
     openItemModal,
     newItemData,
-    editingItem, // NOVO
+    editingItem,
     handleOpenItemModal,
     handleCloseItemModal,
     handleInputChange,
     handleSubmitItem,
-    handleEditItem,   // NOVO
-    handleDeleteItem  // NOVO
+    handleEditItem,
+    handleDeleteItem
   };
 };

@@ -5,7 +5,6 @@ import {
   Button,
   Container,
   TextField,
-  MenuItem,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -15,29 +14,15 @@ import { Add as AddIcon } from '@mui/icons-material'
 import CollectionCard from '../../components/CollectionCard/CollectionCard'
 
 // Componente que exibe e gerencia a lista de coleções
-// Permite criar novas coleções através de um diálogo
 function Collections({ collections, setCollections }) {
 
   const [openDialog, setOpenDialog] = useState(false)
   // Estado que armazena os dados da nova coleção sendo criada
   const [newCollection, setNewCollection] = useState({
     name: '',
-    category: '',
     description: '',
     value: 0
   })
-
-  // Lista de categorias disponíveis para as coleções
-  const categories = [
-    'Brinquedos',
-    'Numismática',
-    'Música',
-    'Arte',
-    'Livros',
-    'Selos',
-    'Cartões',
-    'Outros'
-  ]
 
   // Adiciona uma nova coleção à lista e fecha o diálogo
   const handleAddCollection = () => {
@@ -50,7 +35,7 @@ function Collections({ collections, setCollections }) {
     }
     setCollections([...collections, collection])
     setOpenDialog(false)
-    setNewCollection({ name: '', category: '', description: '', value: 0 })
+    setNewCollection({ name: '', description: '', value: 0 })
   }
 
   return (
@@ -172,39 +157,6 @@ function Collections({ collections, setCollections }) {
               }}
             />
             <TextField
-              select
-              label="Categoria"
-              value={newCollection.category}
-              onChange={(e) => setNewCollection({ ...newCollection, category: e.target.value })}
-              fullWidth
-              sx={{
-                '& .MuiOutlinedInput-root': {
-                  bgcolor: '#ffffff',
-                  '& fieldset': {
-                    borderColor: '#2F4F4F',
-                  },
-                  '&:hover fieldset': {
-                    borderColor: '#D4AF37',
-                  },
-                  '&.Mui-focused fieldset': {
-                    borderColor: '#D4AF37',
-                  },
-                },
-                '& .MuiInputLabel-root': {
-                  color: '#2F4F4F',
-                },
-                '& .MuiInputLabel-root.Mui-focused': {
-                  color: '#D4AF37',
-                },
-              }}
-            >
-              {categories.map((category) => (
-                <MenuItem key={category} value={category}>
-                  {category}
-                </MenuItem>
-              ))}
-            </TextField>
-            <TextField
               label="Descrição"
               value={newCollection.description}
               onChange={(e) => setNewCollection({ ...newCollection, description: e.target.value })}
@@ -276,7 +228,7 @@ function Collections({ collections, setCollections }) {
           <Button 
             onClick={handleAddCollection} 
             variant="contained"
-            disabled={!newCollection.name || !newCollection.category}
+            disabled={!newCollection.name}
             sx={{
               bgcolor: '#D4AF37',
               color: '#2F4F4F',

@@ -82,23 +82,6 @@ const CollectionDetailsHeader = ({ collection }) => {
               {collection.name}
             </Typography>
 
-            {collection.category && (
-              <Box sx={{ mb: 2 }}>
-                <Chip
-                  label={collection.category}
-                  variant="outlined"
-                  sx={{
-                    borderColor: '#D4AF37',
-                    color: '#2F4F4F',
-                    bgcolor: 'rgba(212, 175, 55, 0.1)',
-                    fontWeight: 'bold',
-                    fontSize: '0.9rem',
-                    height: 36,
-                  }}
-                />
-              </Box>
-            )}
-
             {collection.description && (
               <Typography
                 variant="body1"

@@ -86,15 +86,15 @@ function SocialCollectionCard({ collection, userId }) {
         
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <Chip 
-            label={collection.category || 'Sem Categoria'} 
+            label={collection.is_public ? 'Pública' : 'Privada'} 
             variant="outlined"
-            size="small" // Mudado para small para economizar espaço
+            size="small"
             sx={{ 
               fontSize: '0.75rem',
-              height: 24, // Altura fixa menor
+              height: 24,
               borderColor: '#D4AF37',
-              color: collection.category ? '#2F4F4F' : 'rgba(47, 79, 79, 0.6)',
-              bgcolor: collection.category ? 'rgba(212, 175, 55, 0.1)' : 'transparent',
+              color: '#2F4F4F',
+              bgcolor: 'rgba(212, 175, 55, 0.1)',
             }}
           />
         </Box>

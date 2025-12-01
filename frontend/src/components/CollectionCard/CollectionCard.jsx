@@ -18,7 +18,6 @@ import {
 import { useNavigate } from 'react-router-dom'
 
 // Componente que exibe um card de coleção
-// Mostra informações da coleção e permite visualizar, editar ou excluir
 function CollectionCard({ collection, onEdit, onDelete }) {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -34,7 +33,7 @@ function CollectionCard({ collection, onEdit, onDelete }) {
   return (
     <Card sx={{ 
       width: '100%',
-      height: '480px',      // Altura fixa do cartão
+      height: '480px',
       minHeight: '480px',
       maxHeight: '480px',
       display: 'flex', 
@@ -45,7 +44,7 @@ function CollectionCard({ collection, onEdit, onDelete }) {
       border: '1px solid rgba(212, 175, 55, 0.3)',
       boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
       boxSizing: 'border-box',
-      overflow: 'hidden', // Garante que nada vaze do card
+      overflow: 'hidden',
       '&:hover': {
         transform: 'translateY(-4px)',
         boxShadow: '0 8px 24px rgba(212, 175, 55, 0.3)',
@@ -57,11 +56,11 @@ function CollectionCard({ collection, onEdit, onDelete }) {
         image={displayImage}
         alt={collection.name}
         sx={{ 
-          height: 180,       // FIXO: Altura exata
-          minHeight: 180,    // FIXO: Não diminui
-          maxHeight: 180,    // FIXO: Não aumenta
+          height: 180,
+          minHeight: 180,
+          maxHeight: 180,
           objectFit: 'cover',
-          flexShrink: 0      // FIXO: Não deixa o flexbox esmagar a imagem
+          flexShrink: 0
         }}
       />
       
@@ -72,7 +71,7 @@ function CollectionCard({ collection, onEdit, onDelete }) {
         flexDirection: 'column',
         gap: 1,
         textAlign: 'center',
-        overflow: 'hidden' // Importante para o texto não empurrar layout
+        overflow: 'hidden'
       }}>
         <Typography 
           variant="h6" 
@@ -83,12 +82,11 @@ function CollectionCard({ collection, onEdit, onDelete }) {
             lineHeight: 1.2,
             fontWeight: 'bold',
             color: '#2F4F4F',
-            // Limita a 2 linhas para não ocupar muito espaço
             display: '-webkit-box',
             WebkitLineClamp: 2,
             WebkitBoxOrient: 'vertical',
             overflow: 'hidden',
-            minHeight: '2.4rem', // Reserva espaço para 2 linhas
+            minHeight: '2.4rem',
           }}
         >
           {collection.name}
@@ -96,7 +94,7 @@ function CollectionCard({ collection, onEdit, onDelete }) {
         
         <Box sx={{ display: 'flex', justifyContent: 'center', mb: 1 }}>
           <Chip 
-            label={collection.category || (collection.is_public ? 'Pública' : 'Privada')} 
+            label={collection.is_public ? 'Pública' : 'Privada'} 
             variant="outlined"
             size="small"
             sx={{ 
@@ -113,7 +111,7 @@ function CollectionCard({ collection, onEdit, onDelete }) {
           variant="body2" 
           sx={{
             display: '-webkit-box',
-            WebkitLineClamp: 2, // Limita descrição a 2 linhas
+            WebkitLineClamp: 2,
             WebkitBoxOrient: 'vertical',
             overflow: 'hidden',
             fontSize: '0.85rem',
@@ -130,7 +128,7 @@ function CollectionCard({ collection, onEdit, onDelete }) {
           display: 'flex', 
           justifyContent: 'space-between', 
           pt: 1.5,
-          mt: 'auto', // Empurra para o fundo do CardContent
+          mt: 'auto',
           borderTop: 1, 
           borderColor: 'rgba(47, 79, 79, 0.2)',
           gap: 1
@@ -157,13 +155,12 @@ function CollectionCard({ collection, onEdit, onDelete }) {
         </Box>
       </CardContent>
 
-      {/* Ações: FlexShrink 0 garante que esta área nunca suma */}
       <CardActions sx={{ 
         p: 2,
         gap: 1,
         bgcolor: 'rgba(47, 79, 79, 0.05)',
         flexDirection: 'column',
-        flexShrink: 0 // <--- ISSO PROTEGE OS BOTÕES
+        flexShrink: 0
       }}>
         <Button 
           startIcon={<ViewIcon />} 
@@ -202,7 +199,6 @@ function CollectionCard({ collection, onEdit, onDelete }) {
             variant="outlined" 
             size="small"
             fullWidth
-            // ADICIONE O CLICK AQUI:
             onClick={() => onDelete && onDelete(collection)}
             sx={{ 
               fontSize: '0.85rem',
