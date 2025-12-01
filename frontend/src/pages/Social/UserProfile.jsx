@@ -14,7 +14,7 @@ import { useSocialProfile } from '../../hooks/useSocialProfile';
 import CollectionCard from '../../components/CollectionCard/CollectionCard';
 
 
-const SocialUserCollectionsPage = () => {
+const UserProfile = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { viewingUser, collections, loading } = useSocialProfile(id);
@@ -181,4 +181,5 @@ const SocialUserCollectionsPage = () => {
   );
 };
 
-export default SocialUserCollectionsPage;
+export default UserProfile;
+

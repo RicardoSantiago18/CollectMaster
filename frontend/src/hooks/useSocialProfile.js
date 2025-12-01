@@ -7,7 +7,7 @@ import { carregarDadosPerfil } from '../services/userService';
  * Implementa o fluxo conforme diagrama SD07 - VISUALIZAR OUTRO PERFIL.
  * 
  * Conforme diagrama:
- * - FRM-VISUOUTRO: Componente SocialUserCollectionsPage.jsx (interface)
+ * - FRM-VISUOUTRO: Componente UserProfile.jsx (interface)
  * - selecionarPerfil(): Método que carrega perfil e coleções
  * 
  * @param {number|string} userId - ID do usuário a visualizar

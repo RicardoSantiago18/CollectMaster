@@ -8,11 +8,11 @@ import {
 import {
   ArrowBack as ArrowBackIcon,
 } from '@mui/icons-material';
-import { useSocialCollectionDetails } from '../../../hooks/useSocialCollectionDetails';
-import CollectionDetailsHeader from '../../Collections/details/CollectionDetailsHeader';
-import CollectionItemsGrid from '../../Collections/details/CollectionItemsGrid';
+import { useSocialCollectionDetails } from '../../hooks/useSocialCollectionDetails';
+import CollectionDetailsHeader from '../Collections/details/CollectionDetailsHeader';
+import CollectionItemsGrid from '../Collections/details/CollectionItemsGrid';
 
-const SocialUserCollectionDetailsPage = () => {
+const UserCollectionDetails = () => {
   const { userId, collectionId } = useParams();
   const navigate = useNavigate();
   const { viewingUser, collection, items, loading } = useSocialCollectionDetails(userId, collectionId);
@@ -106,4 +106,5 @@ const SocialUserCollectionDetailsPage = () => {
   );
 };
 
-export default SocialUserCollectionDetailsPage;
+export default UserCollectionDetails;
+

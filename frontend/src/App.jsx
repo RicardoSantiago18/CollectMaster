@@ -11,8 +11,8 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import Social from './pages/Social/Social';
 import ProfilePage from './pages/Profile/ProfilePage';
 import CollectionDetails from './pages/Collections/details/CollectionDetails';
-import SocialUserCollectionsPage from './pages/Social/SocialUserCollectionsPage';
-import SocialUserCollectionDetailsPage from './pages/Social/SocialUserCollectionDetailsPage';
+import UserProfile from './pages/Social/UserProfile';
+import UserCollectionDetails from './pages/Social/UserCollectionDetails';
 import Header from './components/Header/Header';
 
 // Configura o tema visual da aplicação com cores personalizadas
@@ -75,8 +75,8 @@ function App() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/social" element={<Social />} />
-        <Route path="/social/user/:id" element={<SocialUserCollectionsPage />} />
-        <Route path="/social/user/:userId/collection/:collectionId" element={<SocialUserCollectionDetailsPage />} />
+        <Route path="/social/user/:id" element={<UserProfile />} />
+        <Route path="/social/user/:userId/collection/:collectionId" element={<UserCollectionDetails />} />
         <Route path="/perfil" element={<ProfilePage />} />
         <Route path="/collections/:id" element={<CollectionDetails />} />
       </Routes>
