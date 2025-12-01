@@ -8,7 +8,7 @@ import {
   Edit as EditIcon,
 } from '@mui/icons-material';
 import { useDashboard } from '../../hooks/useDashboard';
-import { updateUser } from '../../services/userService';
+import { updateUser } from '../../api/users';
 
 const ProfilePage = () => {
   const { user, collections } = useDashboard();

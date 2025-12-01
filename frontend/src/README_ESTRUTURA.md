@@ -14,8 +14,10 @@ frontend/src/
 ├── hooks/
 │   └── useRegisterForm.js  # Lógica do formulário (contém infoCadastro)
 │
-├── services/
-│   └── authService.js       # Comunicação com backend (contém criarUsuario)
+├── api/
+│   ├── auth.js              # Comunicação com backend de autenticação (contém criarUsuario)
+│   ├── collections.js       # Comunicação com backend de coleções
+│   └── users.js             # Comunicação com backend de usuários
 │
 └── components/              # Componentes reutilizáveis
 ```
@@ -36,7 +38,7 @@ frontend/src/
    └─ useRegisterForm.js (hook com método infoCadastro)
 
 2. FRM-CADASTRO → C-CADASTRO: criarUsuario(nome, email, senha)
-   └─ authService.js (método criarUsuario)
+   └─ api/auth.js (método criarUsuario)
    └─ Faz POST para /api/auth/register
 
 3. C-CADASTRO → E-COLECIONADOR: criarUsuario()
@@ -46,7 +48,7 @@ frontend/src/
    └─ (Backend)
 
 5. C-CADASTRO → FRM-CADASTRO: retorna cadastro
-   └─ authService.js retorna { success: true, data: cadastro }
+   └─ api/auth.js retorna { success: true, data: cadastro }
 
 6. FRM-CADASTRO → Colecionador: confirmaçãoCadastro
    └─ useRegisterForm.js redireciona para /login
@@ -63,8 +65,8 @@ frontend/src/
 - **Método principal**: `infoCadastro(nome, email, senha)`
 - **Funções**: Validação, chamada ao serviço, redirecionamento
 
-### `services/authService.js`
-- **Responsabilidade**: Comunicação com o backend
+### `api/auth.js`
+- **Responsabilidade**: Comunicação com o backend de autenticação
 - **Método principal**: `criarUsuario(nome, email, senha)`
 - **Funções**: Faz requisição HTTP para o endpoint de cadastro
 
@@ -73,5 +75,5 @@ frontend/src/
 - **Formulários**: `FRM-*` (ex: `FRM-CADASTRO` = `Register.jsx`)
 - **Métodos**: Seguem o diagrama (ex: `infoCadastro`, `criarUsuario`)
 - **Hooks**: `use*Form` para formulários
-- **Serviços**: `*Service.js` para comunicação com backend
+- **API**: `*.js` para comunicação com backend (ex: `auth.js`, `collections.js`)
 

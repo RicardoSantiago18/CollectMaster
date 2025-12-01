@@ -19,7 +19,7 @@ import {
   ArrowBack,
 } from '@mui/icons-material';
 import { Link as RouterLink, useNavigate, useSearchParams } from 'react-router-dom';
-import { resetPassword } from '../../services/authService';
+import { resetPassword } from '../../api/auth';
 
 
 const ResetPassword = () => {

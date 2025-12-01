@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { forgotPassword } from '../services/authService';
+import { forgotPassword } from '../api/auth';
 
 /**
  * Hook customizado que gerencia toda a lógica do formulário de recuperação de senha.

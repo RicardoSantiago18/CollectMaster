@@ -195,3 +195,4 @@ export const deleteCollection = async (id) => {
     return false;
   }
 };
+

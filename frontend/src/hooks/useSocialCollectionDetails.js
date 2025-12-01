@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getUserById } from '../services/userService';
-import { getCollections, getCollectionItems } from '../services/collectionService';
+import { getUserById } from '../api/users';
+import { getCollections, getCollectionItems } from '../api/collections';
 
 /**
  * Hook customizado que gerencia a lógica de visualização de detalhes de uma coleção

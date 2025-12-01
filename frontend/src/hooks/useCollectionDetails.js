@@ -6,7 +6,7 @@ import {
   createItem, 
   updateItem, 
   deleteItem 
-} from '../services/collectionService';
+} from '../api/collections';
 
 /**
  * Implementa o fluxo conforme diagrama SD05 - ADICIONAR ITEM.

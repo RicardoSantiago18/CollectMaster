@@ -114,3 +114,4 @@ export const updateUser = async (userId, userData) => {
     return { success: false, error: 'Erro de conexão. Tente novamente.' };
   }
 };
+

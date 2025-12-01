@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getCollections, createCollection, updateCollection, deleteCollection } from '../services/collectionService'; 
+import { getCollections, createCollection, updateCollection, deleteCollection } from '../api/collections'; 
 
 /**
  * Hook customizado que gerencia toda a lógica do Dashboard.

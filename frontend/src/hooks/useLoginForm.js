@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loginUser } from '../services/authService';
+import { loginUser } from '../api/auth';
 
 /**
  * Hook customizado que gerencia toda a lógica do formulário de login.

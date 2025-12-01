@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { carregarDadosPerfil } from '../services/userService';
+import { carregarDadosPerfil } from '../api/users';
 
 /**
  * Hook customizado que gerencia a lógica de carregamento de perfil e coleções de outro usuário.

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { criarUsuario } from '../services/authService';
+import { criarUsuario } from '../api/auth';
 
 /**
  * Hook customizado que gerencia toda a lógica do formulário de registro.

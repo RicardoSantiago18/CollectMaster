@@ -1,5 +1,5 @@
 /**
- * Serviço de autenticação
+ * API Client para autenticação
  * Implementa comunicação com o backend para operações de autenticação
  */
 
@@ -156,3 +156,4 @@ export const resetPassword = async (token, password) => {
     return { success: false, error: 'Erro de conexão. Tente novamente.' };
   }
 };
+

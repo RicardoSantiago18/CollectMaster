@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { getAllUsers, searchUsers } from '../services/userService';
+import { getAllUsers, searchUsers } from '../api/users';
 
 /**
  * Hook customizado que gerencia a lógica de busca e listagem de usuários para a página Social.
